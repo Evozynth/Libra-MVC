@@ -1,7 +1,7 @@
 <IfModule mod_rewrite.c>
 	RewriteEngine on
 	# Must use RewriteBase on www.student.bth.se, Rewritebase for url /~stsv13/test is /~stsv13/test/
-	#RewriteBase /change/this/to/site/base/url/if/needed/
+	RewriteBase /~stsv13/phpmvc/Libra-MVC/
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME} !-d
 	RewriteRule (.*) index.php/$1 [NC,L]
