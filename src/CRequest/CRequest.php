@@ -45,7 +45,13 @@ class CRequest {
             $scriptPart = dirname($scriptName);
         }
         
+        // Set query to be everything after base_url, except the optional qurystring
 		$query = trim(substr($requestUri, strlen(rtrim($scriptPart, '/'))), '/');
+        $pos = strcspn($query, '?');
+        if ($pos) {
+            $query = substr($query, 0, $pos);
+        }
+        
         // Check if this look like a querystring approach link
         if (substr($query, 0, 1) === '?' && isset($_GET['q'])) {
             $query = trim($_GET['q']);

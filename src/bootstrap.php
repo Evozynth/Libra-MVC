@@ -11,8 +11,8 @@
  */
 function autoload($aClassName) {
 	$classFile = "/src/{$aClassName}/{$aClassName}.php";
-	$file1 = LIBRA_INSTALL_PATH . $classFile;
-	$file2 = LIBRA_SITE_PATH . $classFile;
+	$file1 = LIBRA_SITE_PATH . $classFile;
+	$file2 = LIBRA_INSTALL_PATH . $classFile;
 	if (is_file($file1)) {
 		require_once($file1);
 	} elseif (is_file($file2)) {

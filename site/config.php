@@ -10,7 +10,11 @@
 error_reporting(-1);
 ini_set('display_errors', 1);
 
-$li->config['debug'] = false;
+
+/**
+ * Set what to show as debug or developer information in the get_debug() theme helper.
+ */
+$li->config['debug']['display-libre'] = false;
 
 
 /**
@@ -60,6 +64,7 @@ $li->config['language'] = 'en';
 $li->config['controllers'] = array(
 	'index' => array('enabled' => true, 'class' => 'CCIndex'),
 	'developer' => array('enabled' => true, 'class' => 'CCDeveloper'),
+	'guestbook' => array('enabled' => true, 'class' => 'CCGuestbook'),
 );
 
 /**

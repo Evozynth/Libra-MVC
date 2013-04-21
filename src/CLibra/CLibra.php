@@ -16,6 +16,12 @@ class CLibra implements ISingleton {
 		// include the site specific config.php and create a ref to $li to be used by config.php
 		$li = &$this;
 		require(LIBRA_SITE_PATH.'/config.php');
+        
+        // Start a named session
+        session_name($this->config['session_name']);
+        session_start();
+        
+        date_default_timezone_set($this->config['timezone']);
 	}
 	
 	/**
