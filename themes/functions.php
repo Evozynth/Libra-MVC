@@ -5,6 +5,25 @@
  */
 
 /**
+ * Print debuginformation from the framework 
+ */
+function get_debug() {
+    $li = CLibra::Instance();
+    
+    if(empty($li->config['debug'])) {
+        return;
+    } else {
+        $html = '<h2>Debuginformation</h2><hr>
+                 <p>The content of the config array:</p><pre>'      . htmlentities(print_r($li->config, true))  . '</pre>'; 
+        $html .= '<hr><p>The content of the data array: </p><pre>'  . htmlentities(print_r($li->data, true))    . '</pre>';
+        $html .= '<hr><p>The content of the request array:</p><pre>'. htmlentities(print_r($li->request, true)) . '</pre>';
+        return $html;
+    }
+}
+ 
+ 
+ 
+/**
  * Create a url by prepending the base_url.
  */
 function base_url($url) {

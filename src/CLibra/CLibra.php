@@ -40,6 +40,7 @@ class CLibra implements ISingleton {
 		$method = $this->request->method;
 		$arguments = $this->request->arguments;
 		
+		$formatedMethod = str_replace(array('_','-'), '', $method);
 		
 		// Is the controller enabled in config.php?
 		$controllerExists = isset($this->config['controllers'][$controller]);
@@ -58,9 +59,9 @@ class CLibra implements ISingleton {
 			$rc = new ReflectionClass($className);
 			if($rc->implementsInterface('IController')) {
 			    // Check if there is a callable method in the controller class, if then call it.
-				if($rc->hasMethod($method)) {
+				if($rc->hasMethod($formatedMethod)) {
 					$controllerObj = $rc->newInstance();
-					$methodObj = $rc->getMethod($method);
+					$methodObj = $rc->getMethod($formatedMethod);
 					$methodObj->invokeArgs($controllerObj, $arguments);
 				} else {
 					die("404. " . get_class() . " error: Controller does not contain method.");

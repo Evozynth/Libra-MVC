@@ -10,6 +10,9 @@
 error_reporting(-1);
 ini_set('display_errors', 1);
 
+$li->config['debug'] = false;
+
+
 /**
  * What type of urls should be used?
  * 
