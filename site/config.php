@@ -15,6 +15,8 @@ ini_set('display_errors', 1);
  * Set what to show as debug or developer information in the get_debug() theme helper.
  */
 $li->config['debug']['display-libre'] = false;
+$li->config['debug']['db-num-queries'] = true;
+$li->config['debug']['db-queries'] = true;
 
 
 /**

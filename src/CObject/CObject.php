@@ -8,6 +8,7 @@ class CObject {
     public $config;
     public $request;
     public $data;
+    public $db;
     
     /**
      * Constructor
@@ -16,6 +17,7 @@ class CObject {
         $li = CLibra::Instance();
         $this->config = &$li->config;
         $this->request = &$li->request;
-        $this->data = &$li->data;        
+        $this->data = &$li->data;
+        $this->db = &$li->db;
     }
 }
