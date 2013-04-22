@@ -75,4 +75,7 @@ $li->config['theme'] = array(
     'name' => 'core',
 );
 
- 
+/**
+ * Set database(s)
+ */
+$li->config['database'][0]['dsn'] = 'sqlite:' . LIBRA_SITE_PATH . '/data/.ht.sqlite'; 
