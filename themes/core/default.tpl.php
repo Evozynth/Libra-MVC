@@ -10,7 +10,8 @@
         <?=$header?>
     </div>
     <div id="main" role="main">
-        <?=$main?>
+        <?=@$main?>
+        <?=render_views()?>
         <?=get_debug()?>
     </div>
     <div id="footer">

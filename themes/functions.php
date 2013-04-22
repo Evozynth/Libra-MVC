@@ -33,3 +33,13 @@ function get_debug() {
 function base_url($url) {
     return CLibra::Instance()->request->base_url . trim($url, '/');
 }
+
+
+/**
+ * Render all views
+ */
+function render_views() {
+    return CLibra::Instance()->views->Render();
+}
+
+

@@ -26,6 +26,9 @@ class CLibra implements ISingleton {
         if (isset($this->config['database'][0]['dsn'])) {
             $this->db = new CDatabase($this->config['database'][0]['dsn']);
         }
+        
+        // Create a container for all views and theme data
+        $this->views = new CViewContainer();
 	}
 	
 	/**
@@ -110,6 +113,7 @@ class CLibra implements ISingleton {
         
         // Extract $li->data to own variables and handover to the template file
         extract($this->data);
+        extract($this->views->GetData());
         include("{$themePath}/default.tpl.php");
         
 	}

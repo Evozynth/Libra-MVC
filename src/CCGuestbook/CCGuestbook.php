@@ -5,9 +5,11 @@
  * @package LibraCore
  */
 class CCGuestbook extends CObject implements IController, IHasSQL {
+        
+    /**
+     * Members
+     */    
     private $pageTitle = 'Libra Guestbook Example';
-    private $pageheader = '<h1>Guestbook example</h1><p>Showing off how to implement a guestbook in Libra.</p>';
-    private $pageMessages = '<h2>Current messages</h2>';
     
     /**
      * Constructor
@@ -20,29 +22,11 @@ class CCGuestbook extends CObject implements IController, IHasSQL {
      * Implementing interface IController. All controllers must have an index action.
      */
     public function Index() {
-        $formAction = $this->request->CreateUrl('guestbook/handler');
-        $this->pageForm = '
-            <form action="'.$formAction.'" method="post">
-                <p>
-                    <label>Message:<br>
-                    <textarea name="newEntry"></textarea></label>
-                </p>
-                <p>
-                    <input type="submit" name="doAdd" value="Add message">
-                    <input type="submit" name="doClear" value="Clear all messages">
-                    <input type="submit" name="doCreate" value="Create table">
-                </p>
-            </form>
-        ';
-        
-        $this->data['title'] = $this->pageTitle;
-        $this->data['main'] = $this->pageheader . $this->pageForm . $this->pageMessages;
-        
-        $guestbook = $this->ReadAllFromDatabase();
-        foreach ($guestbook as $val) {
-            $this->data['main'] .= '<div style="background-color: #f6f6f6; border: 1px solid #ccc; margin-bottom: 1em; padding: 1em;"><p>At: '.$val['created'].'</p><p>'.$val['entry'].'</p></div>'."\n";
-
-        }
+        $this->views->SetTitle($this->pageTitle);
+        $this->views->AddInclude(__DIR__ . '/index.tpl.php', array(
+                                    'entries' => $this->ReadAllFromDatabase(),
+                                    'formAction' => $this->request->CreateUrl('guestbook/handler')
+                                 ));
     }
 
     /**
