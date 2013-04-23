@@ -19,17 +19,6 @@ class CCGuestbook extends CObject implements IController, IHasSQL {
     }
     
     /**
-     * Implementing interface IController. All controllers must have an index action.
-     */
-    public function Index() {
-        $this->views->SetTitle($this->pageTitle);
-        $this->views->AddInclude(__DIR__ . '/index.tpl.php', array(
-                                    'entries' => $this->ReadAllFromDatabase(),
-                                    'formAction' => $this->request->CreateUrl('guestbook/handler')
-                                 ));
-    }
-
-    /**
      * Implementing interface IHasSQL. Encapsulating all SQL used by this class.
      * 
      * @param string $key the string that is the key of the wanted SQL-entry in the array.
@@ -47,6 +36,16 @@ class CCGuestbook extends CObject implements IController, IHasSQL {
         return $queries[$key];
     }
     
+    /**
+     * Implementing interface IController. All controllers must have an index action.
+     */
+    public function Index() {
+        $this->views->SetTitle($this->pageTitle);
+        $this->views->AddInclude(__DIR__ . '/index.tpl.php', array(
+                                    'entries' => $this->ReadAllFromDatabase(),
+                                    'formAction' => $this->request->CreateUrl('guestbook/handler')
+                                 ));
+    }
     
     /**
      * Add entry to the guestbook
@@ -68,6 +67,7 @@ class CCGuestbook extends CObject implements IController, IHasSQL {
     private function CreateTableInDatabase() {
         try {
             $this->db->ExecuteQuery(self::SQL('create table guestbook'));
+            $this->session->AddMessage('notice', 'Successfully created the database tables (or left them untouched if they already existed).');
         } catch (Exception $e) {
             die("$e<br>Failed to open database: " . $this->config['database'][0]['dsn']);
         }
@@ -81,6 +81,7 @@ class CCGuestbook extends CObject implements IController, IHasSQL {
         if($this->db->rowCount() != 1) {
             die("Failed to insert new guestbook item into database.");
         }
+        $this->session->AddMessage('success', 'Successfully inserted new message.');
     }
     
     /**
@@ -88,6 +89,7 @@ class CCGuestbook extends CObject implements IController, IHasSQL {
      */
     private function DeleteAllFromDatabase() {
         $this->db->ExecuteQuery(self::SQL('delete from guestbook'));
+        $this->session->AddMessage('info', 'Removed all messages from the database table.');
     }
     
     /**

@@ -19,3 +19,29 @@ body {
 	background-color: #fff;
 	padding: 1em;
 }
+
+#footer {
+	background-color: #dfdfdf;
+	font-size: 0.9em;
+	padding: 1.12em;
+}
+
+div.info, div.notice, div.success, div.warning, div.error, div.alert {
+	border: 2px solid;
+	padding: 1em;
+}
+
+div.info {
+	border-color: #15b5ea;
+	background-color: #8adaf4;
+}
+
+div.notice {
+	border-color: #eab515;
+	background-color: #f4da8a;
+}
+
+div.success {
+	border-color: #4aea15;
+	background-color: #a5f48a;
+}

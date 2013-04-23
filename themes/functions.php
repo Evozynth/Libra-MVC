@@ -16,11 +16,18 @@ function get_debug() {
     if (isset($li->config['debug']['db-queries']) && $li->config['debug']['db-queries'] && isset($li->db)) {
         $html .= "<p>Database made the following queries</p><pre>" . implode('<br><br>', $li->db->GetQueries()) . "</pre>";
     }
-    if (isset($li->config['debug']['display-libra']) && $li->config['debug']['display-libra']) {
+    if (isset($li->config['debug']['libra']) && $li->config['debug']['libra']) {
         $html = '<h2>Debuginformation</h2><hr>
                  <p>The content of the config array:</p><pre>'      . htmlentities(print_r($li->config, true))  . '</pre>'; 
         $html .= '<hr><p>The content of the data array: </p><pre>'  . htmlentities(print_r($li->data, true))    . '</pre>';
         $html .= '<hr><p>The content of the request array:</p><pre>'. htmlentities(print_r($li->request, true)) . '</pre>';
+    }
+    if (isset($li->config['debug']['session']) && $li->config['debug']['session']) {
+        $html .= "<hr><h3>SESSION</h3><p>The content of CLibra->session:</p><pre>" . htmlent(print_r($li->session, true)) . "</pre>";
+        $html .= "<p>The content of \$_SESSION:</p><pre>" . htmlent(print_r($_SESSION, true)) . "</pre>";
+    }
+    if (isset($li->config['debug']['timer']) && $li->config['debug']['timer']) {
+        $html .= '<p>Page was loaded in ' . round(microtime(true) - $li->timer['first'], 5)*1000 . ' msecs</p>';
     }
     return $html;
 }
@@ -40,6 +47,22 @@ function base_url($url) {
  */
 function render_views() {
     return CLibra::Instance()->views->Render();
+}
+
+/**
+ * Get messages stored in flash session.
+ */
+function get_messages_from_session() {
+    $messages = CLibra::Instance()->session->GetMessages();
+    $html = null;
+    if (!empty($messages)) {
+        foreach ($messages as $val) {
+            $valid = array('info', 'notice', 'success', 'warning', 'error', 'alert');
+            $class = (in_array($val['type'], $valid)) ? $val['type'] : 'info';
+            $html .= "<div class='$class'>{$val['message']}</div>\n";
+        }
+    }
+    return $html;
 }
 
 

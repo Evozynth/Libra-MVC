@@ -14,9 +14,11 @@ ini_set('display_errors', 1);
 /**
  * Set what to show as debug or developer information in the get_debug() theme helper.
  */
-$li->config['debug']['display-libre'] = false;
-$li->config['debug']['db-num-queries'] = true;
-$li->config['debug']['db-queries'] = true;
+$li->config['debug']['libre'] = false;
+$li->config['debug']['session'] = false;
+$li->config['debug']['db-num-queries'] = false;
+$li->config['debug']['db-queries'] = false;
+$li->config['debug']['timer'] = true;
 
 
 /**
@@ -38,6 +40,7 @@ $li->config['base_url'] = null;
  * Define session name
  */
 $li->config['session_name'] = preg_replace('/[:\.\/-_]/', '', $_SERVER["SERVER_NAME"]);
+$li->config['session_key'] = 'libra';
 
 /*
 * Define server timezone

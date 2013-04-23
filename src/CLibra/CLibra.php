@@ -8,11 +8,21 @@
 class CLibra implements ISingleton {
 
 	private static $instance = null;
+    public $config = array();
+    public $request;
+    public $data;
+    public $db;
+    public $views;
+    public $session;
+    public $timer = array();
 	
 	/**
 	 * Constructor
 	 */
 	protected function __construct() {
+	    // Time page generation
+	    $this->timer['first'] = microtime(true);
+        
 		// include the site specific config.php and create a ref to $li to be used by config.php
 		$li = &$this;
 		require(LIBRA_SITE_PATH.'/config.php');
@@ -20,7 +30,10 @@ class CLibra implements ISingleton {
         // Start a named session
         session_name($this->config['session_name']);
         session_start();
+        $this->session = new CSession($this->config['session_key']);
+        $this->session->PopulateFromSession();
         
+        // Set default date/time-zone
         date_default_timezone_set($this->config['timezone']);
         
         if (isset($this->config['database'][0]['dsn'])) {
@@ -95,6 +108,9 @@ class CLibra implements ISingleton {
 	 * Theme Engine Render, renders the views using the selected theme.
 	 */
 	public function ThemeEngineRender() {
+	    // Save to session before output anything
+	    $this->session->StoreInSession();
+        
 	    // Get the paths and settings for the theme
 	    $themeName = $this->config['theme']['name'];
         $themePath = LIBRA_INSTALL_PATH . "/themes/{$themeName}";
