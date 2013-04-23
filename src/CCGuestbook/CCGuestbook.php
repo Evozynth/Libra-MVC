@@ -36,7 +36,7 @@ class CCGuestbook extends CObject implements IController {
      * Delegates request to appropriate method. 
      */
     public function Handler() {
-        if (isset($_POST['doAdd'])) {
+        if (isset($_POST['doAdd']) && empty($_POST['email'])) {
             $this->guestbookModel->Add(strip_tags($_POST['newEntry']));
         } elseif (isset($_POST['doClear'])) {
             $this->guestbookModel->DeleteAll();
@@ -44,7 +44,6 @@ class CCGuestbook extends CObject implements IController {
             $this->guestbookModel->Init();
         }
         $this->RedirectTo($this->request->controller);
-        // header('Location: ' . $this->request->CreateUrl('guestbook'));
     }
     
 }
