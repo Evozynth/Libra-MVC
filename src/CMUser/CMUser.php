@@ -20,10 +20,17 @@ class CMUser extends CObject implements IHasSQL {
      */
     public static function SQL($key=null) {
         $queries = array(
-            'drop table user'       => "DROP TABLE IF EXISTS User;",
-            'create table user'     => "CREATE TABLE IF NOT EXISTS User (id INTEGER PRIMARY KEY, akronym TEXT KEY, name TEXT, email TEXT, password TEXT, created DATETIME default (datetime('now')));",
-            'insert into user'      => "INSERT INTO User (akronym, name, email, password) VALUES (?,?,?,?);",
-            'check user password'   => "SELECT * FROM User WHERE password=? AND (akronym=? OR email=?);",
+            'drop table user'           => "DROP TABLE IF EXISTS User;",
+            'drop table group'          => "DROP TABLE IF EXISTS Groups;",
+            'drop table user2group'     => "DROP TABLE IF EXISTS User2Groups;",
+            'create table user'         => "CREATE TABLE IF NOT EXISTS User (id INTEGER PRIMARY KEY, acronym TEXT KEY, name TEXT, email TEXT, password TEXT, created DATETIME default (datetime('now')));",
+            'create table group'        => "CREATE TABLE IF NOT EXISTS Groups (id INTEGER PRIMARY KEY, acronym TEXT KEY, name TEXT, created DATETIME default (datetime('now')));",
+            'create table user2group'   => "CREATE TABLE IF NOT EXISTS User2Groups (idUser INTEGER, idGroups INTEGER, created DATETIME default (datetime('now')), PRIMARY KEY(idUser, idGroups));",
+            'insert into user'          => "INSERT INTO User (acronym, name, email, password) VALUES (?,?,?,?);",
+            'insert into group'         => "INSERT INTO Groups (acronym, name) VALUES (?, ?);",
+            'insert into user2group'    => "INSERT INTO User2Groups (idUser, idGroups) VALUES (?,?);",
+            'check user password'       => "SELECT * FROM User WHERE password=? AND (acronym=? OR email=?);",
+            'get group memberships'     => "SELECT * FROM Groups AS g INNER JOIN User2Groups AS ug ON g.id=ug.idGroups WHERE ug.idUser=?;",
         );
         
         if (!isset($queries[$key])) {
@@ -37,10 +44,24 @@ class CMUser extends CObject implements IHasSQL {
      */
     public function Init() {
         try {
+            $this->db->ExecuteQuery(self::SQL('drop table user2group'));
+            $this->db->ExecuteQuery(self::SQL('drop table group'));
             $this->db->ExecuteQuery(self::SQL('drop table user'));
             $this->db->ExecuteQuery(self::SQL('create table user'));
+            $this->db->ExecuteQuery(self::SQL('create table group'));
+            $this->db->ExecuteQuery(self::SQL('create table user2group'));
             $this->db->ExecuteQuery(self::SQL('insert into user'), array('root', 'The Administrator', 'stanley.svensson@gmail.com', 'root'));
-            $this->session->AddMessage('notice', 'Successfully created the database tables and created a default admin user as root:root.');
+            $idRootUser = $this->db->LastInsertId();
+            $this->db->ExecuteQuery(self::SQL('insert into user'), array('doe', 'John Doe', 'doe@mail.com', 'doe'));
+            $idDoeUser = $this->db->LastInsertId();
+            $this->db->ExecuteQuery(self::SQL('insert into group'), array('admin', 'The Administrator Group'));
+            $idAdminGroup = $this->db->LastInsertId();
+            $this->db->ExecuteQuery(self::SQL('insert into group'), array('user', 'The User Group'));
+            $idUserGroup = $this->db->LastInsertId();
+            $this->db->ExecuteQuery(self::SQL('insert into user2group'), array($idRootUser, $idAdminGroup));
+            $this->db->ExecuteQuery(self::SQL('insert into user2group'), array($idRootUser, $idUserGroup));
+            $this->db->ExecuteQuery(self::SQL('insert into user2group'), array($idDoeUser, $idUserGroup));
+            $this->session->AddMessage('notice', 'Successfully created the database tables and created a default admin user as root:root and an ordinary user doe:doe.');
         } catch(Exception $e) {
             die("$e<br>Failed to open database: " . $this->config['database'][0]['dsn']);
         }
@@ -49,15 +70,16 @@ class CMUser extends CObject implements IHasSQL {
     /**
      * Login by authenticate the user and password. Store user information in session if success.
      * 
-     * @param string $akronym The Email adress or user akronym.
-     * @param string $password The password that should match the akronym or email adress.
+     * @param string $acronym The Email adress or user acronym.
+     * @param string $password The password that should match the acronym or email adress.
      * @return boolean true if match else false.
      */
-    public function Login($akronymOrEmail, $password) {
-        $user = $this->db->ExecuteSelectQueryAndFetchAll(self::SQL('check user password'), array($password, $akronymOrEmail, $akronymOrEmail));
+    public function Login($acronymOrEmail, $password) {
+        $user = $this->db->ExecuteSelectQueryAndFetchAll(self::SQL('check user password'), array($password, $acronymOrEmail, $acronymOrEmail));
         $user = (isset($user[0])) ? $user[0] : null;
         unset($user['password']);
         if ($user) {
+            $user['groups'] = $this->db->ExecuteSelectQueryAndFetchAll(self::SQL('get group memberships'), array($user['id']));
             $this->session->SetAuthenticatedUser($user);
             $this->session->AddMessage('success', "Welcome '{$user['name']}'.");
         } else {

@@ -30,8 +30,8 @@ class CCuser extends CObject implements IController {
     /**
      * Authenticate and login a user.
      */
-    public function Login($akronymOrEmail = null, $password = null) {
-        $this->userModel->Login($akronymOrEmail, $password);
+    public function Login($acronymOrEmail = null, $password = null) {
+        $this->userModel->Login($acronymOrEmail, $password);
         $this->RedirectToController();
     }
     
