@@ -46,4 +46,14 @@ class CObject {
         header('Location: ' . $this->request->CreateUrl($url));
     }
     
+    /**
+     * Redirect to a method within the current controller. Defaults to index-method. Uses RedirectTo().
+     * 
+     * @param string $method Name of the method, default is index method.
+     */
+    protected function RedirectToController($method = null) {
+        $this->RedirectTo($this->request->controller, $method);
+    }
+    
+    
 }

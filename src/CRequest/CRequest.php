@@ -27,7 +27,46 @@ class CRequest {
         $this->cleanUrl = $urlType == 1 ? true : false;
         $this->querystringUrl = $urlType == 2 ? true : false;
     }
+    
+    /**
+     * Create a url in the way it should be created
+     * 
+     * @param string $url The relative url or the controller.
+     * @param string $method The method to use, $url is then the controller or empty for current.
+     * @param string $arguments The extra arguments to send to the method.
+     */
+    public function CreateUrl($url = null, $method = null, $arguments = null) {
         
+        // If fully qualified just leave it.
+        if(!empty($url) && (strpos($url, '://') || $url[0] == '/')) {
+            return $url;
+        }
+        
+        // Get current controller if empty and method or arguments choosen
+        if (empty($url) && (!empty($method) || !empty($arguments))) {
+            $url = $this->controller;
+        }
+        
+        // Get current method if empty and arguments choosen
+        if(empty($method) && !empty($arguments)) {
+            $method = $this->method;
+        }
+            
+        // Create url according to configured style
+        $prepend = $this->base_url;
+        if ($this->cleanUrl) {
+            ;
+        } elseif ($this->querystringUrl) {
+            $prepend .= 'index.php?q=';
+        } else {
+            $prepend .= 'index.php/';
+        }
+        $url = trim($url, '/');
+        $method = empty($method) ? null : '/' . trim($method, '/');
+        $arguments = empty($arguments) ? null : '/' . trim($arguments, '/');
+        return $prepend . rtrim("$url$method$arguments", '/');
+    }
+      
 	/**
 	 * Parse the current url request and divide it in controller, method and arguments.
      * 
@@ -94,21 +133,6 @@ class CRequest {
         ":{$_SERVER['SERVER_PORT']}");
         $url .= $_SERVER['SERVER_NAME'] . $serverPort . htmlspecialchars($_SERVER['REQUEST_URI']);
         return $url; 
-    }
-    
-    /**
-     * Create a url in the way it should be created
-     */
-    public function CreateUrl($url = null) {
-        $prepend = $this->base_url;
-        if ($this->cleanUrl) {
-            ;
-        } elseif ($this->querystringUrl) {
-            $prepend .= 'index.php?q=';
-        } else {
-            $prepend .= 'index.php/';
-        }
-        return $prepend . rtrim($url, '/');
     }
 }
 

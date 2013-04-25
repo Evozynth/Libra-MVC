@@ -65,4 +65,14 @@ function get_messages_from_session() {
     return $html;
 }
 
+/**
+ * Create a url to an internal resource.
+ * 
+ * @param string $urlOrController The whole url to the controller. Leave empty for current controller.
+ * @param string $method The method when specifying controller as first argument, else leave empty.
+ * @param string $arguments The extra arguments to the method, leave empty if not using the method.
+ */
+function create_url($urlOrController = null, $method = null, $arguments = null) {
+    return CLibra::Instance()->request->CreateUrl($urlOrController, $method, $arguments);
+}
 
