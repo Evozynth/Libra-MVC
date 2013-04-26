@@ -17,25 +17,25 @@ class CCIndex extends CObject implements IController {
 	 * Implementing interface IController. All controllers must have an index action.
 	 */
 	public function Index() {
-	    $this->Menu();
+	    $this->views->SetTitle('Index Controller');
+	    $this->views->AddInclude(__DIR__ . '/index.tpl.php', array('menu' => $this->Menu()));
 	}
     
     private function Menu() {
-        $menu = array('index', 'index/index', 'guestbook', 'user', 'developer', 'developer/index', 'developer/links', 'developer/display-object');
-        
-        $html = null;
-        foreach ($menu as $val) {
-            $html .= "<li><a href=" . $this->request->CreateUrl($val) . ">$val</a></li>";
+        $items = array();
+        foreach ($this->config['controllers'] as $key => $val) {
+            if ($val['enabled']) {
+                $rc = new ReflectionClass($val['class']);
+                $items[] = $key;
+                $methods = $rc->getMethods(ReflectionMethod::IS_PUBLIC);
+                foreach ($methods as $method) {
+                    if ($method->name != '__construct' && $method->name != '__destruct' && $method->name != 'Index') {
+                        $items[] = "$key/" . mb_strtolower($method->name);
+                    }
+                }
+            }
         }
-        
-        $this->data['title'] = "The index controller";
-        $this->data['main'] = <<<EOD
-<h1>The index controller</h1>
-<p>This is what you can do for now.</p>
-<ul>
-{$html}
-</ul>
-EOD;
+        return $items;
     }
 	
 }
