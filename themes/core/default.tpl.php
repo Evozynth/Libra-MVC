@@ -7,6 +7,9 @@
 </head>
 <body>
     <div id="header">
+        <div id="loginMenu">
+            <?=login_menu()?>
+        </div>
         <?=$header?>
     </div>
     <div id="main" role="main">

@@ -9,8 +9,8 @@ class CMUser extends CObject implements IHasSQL {
     /**
      * Constructor
      */
-    public function __construct() {
-        parent::__construct();
+    public function __construct($li = null) {
+        parent::__construct($li);
     }
     
     /**
@@ -80,6 +80,14 @@ class CMUser extends CObject implements IHasSQL {
         unset($user['password']);
         if ($user) {
             $user['groups'] = $this->db->ExecuteSelectQueryAndFetchAll(self::SQL('get group memberships'), array($user['id']));
+            foreach ($user['groups'] as $val) {
+                if ($val['id'] == 1) {
+                    $user['hasRoleAdmin'] = true;
+                }
+                if ($val['id'] == 2) {
+                    $user['hasRoleUser'] = true;
+                }
+            }
             $this->session->SetAuthenticatedUser($user);
             $this->session->AddMessage('success', "Welcome '{$user['name']}'.");
         } else {
@@ -110,8 +118,27 @@ class CMUser extends CObject implements IHasSQL {
      * 
      * @return array with user profile or null if anonymous user.
      */
-    public function GetUserProfile() {
+    public function GetProfile() {
         return $this->session->GetAuthenticatedUser();
     }
     
+    /**
+     * Get the user acronym.
+     * 
+     * @return string with user acronym or null
+     */
+    public function GetAcronym() {
+        $profile = $this->GetProfile();
+        return isset($profile['acronym']) ? $profile['acronym'] : null;
+    }
+    
+    /**
+     * Does the user have the admin role?
+     * 
+     * @return boolean true or false.
+     */
+    public function IsAdministrator() {
+        $profile = $this->GetProfile();
+        return isset($profile['hasRoleAdmin']) ? $profile['hasRoleAdmin'] : false;
+    }
 }

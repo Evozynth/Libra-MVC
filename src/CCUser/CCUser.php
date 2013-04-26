@@ -13,17 +13,27 @@ class CCuser extends CObject implements IController {
      */
     public function __construct() {
         parent::__construct();
-        $this->userModel = new CMUser();
     }
     
     /**
      * Show profile information of the user.
      */
     public function Index() {
-        $this->views->SetTitle('User Profile');
+        $this->views->SetTitle('User Controller');
         $this->views->AddInclude(__DIR__ . '/index.tpl.php', array(
-            'is_authenticated' => $this->userModel->IsAuthenticated(),
-            'user' => $this->userModel->GetUserProfile(),
+            'is_authenticated'  => $this->user->IsAuthenticated(),
+            'user'              => $this->user->GetProfile(),
+        ));
+    }
+    
+    /**
+     * View and edit user profile.
+     */
+    public function Profile() {
+        $this->views->SetTitle('User Profile');
+        $this->views->AddInclude(__DIR__ . '/profile.tpl.php', array(
+            'is_authenticated'  => $this->user->IsAuthenticated(),
+            'user'              => $this->user->GetProfile(),
         ));
     }
     
@@ -31,23 +41,27 @@ class CCuser extends CObject implements IController {
      * Authenticate and login a user.
      */
     public function Login($acronymOrEmail = null, $password = null) {
-        $this->userModel->Login($acronymOrEmail, $password);
-        $this->RedirectToController();
+        if ($acronymOrEmail && $password) {
+            $this->user->Login($acronymOrEmail, $password);
+            $this->RedirectToController('profile');   
+        }
+        $this->views->SetTitle('Login');
+        $this->views->AddInclude(__DIR__ . '/login.tpl.php');
     }
     
     /**
      * logout a user.
      */
     public function Logout() {
-        $this->userModel->Logout();
+        $this->user->Logout();
         $this->RedirectToController();
     }
     
     /**
      * Init the user database.
      */
-    public function init() {
-        $this->userModel->Init();
+    public function Init() {
+        $this->user->Init();
         $this->RedirectToController();
     }
     

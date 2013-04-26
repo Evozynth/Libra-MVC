@@ -14,24 +14,28 @@ class CObject {
     public $db;
     public $views;
     public $session;
+    public $user;
     
     /**
-     * Constructor
+     * Constructor, can be instanciated by sending in the $li reference.
      */
-    protected function __construct() {
-        $li = CLibra::Instance();
+    protected function __construct($li = null) {
+        if (!$li) {
+            $li = CLibra::Instance();
+        }
         $this->config = &$li->config;
         $this->request = &$li->request;
         $this->data = &$li->data;
         $this->db = &$li->db;
         $this->views = &$li->views;
         $this->session = &$li->session;
+        $this->user = &$li->user;
     }
     
     /**
      * Redirect to another url and store the session
      */
-    protected function RedirectTo($url) {
+    protected function RedirectTo($urlOrController = null, $method = null) {
         $li = CLibra::Instance();
         if (isset($li->config['debug']['db-num-queries']) && $li->config['debug']['db-num-queries'] && isset($li->db)) {
             $this->session->SetFlash('database_queries', $this->db->GetNumQueries());
@@ -43,7 +47,7 @@ class CObject {
             $this->session->SetFlash('timer', $li->timer);
         }
         $this->session->StoreInSession();
-        header('Location: ' . $this->request->CreateUrl($url));
+        header('Location: ' . $this->request->CreateUrl($urlOrController, $method));
     }
     
     /**

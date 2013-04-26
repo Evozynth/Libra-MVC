@@ -76,3 +76,19 @@ function create_url($urlOrController = null, $method = null, $arguments = null) 
     return CLibra::Instance()->request->CreateUrl($urlOrController, $method, $arguments);
 }
 
+/**
+ * Login menu. Creates a menu which reflects if user is logged in or not.
+ */
+function login_menu() {
+    $li = CLibra::Instance();
+    if ($li->user->IsAuthenticated()) {
+        $items = '<a href="' . create_url('user/profile') . '">' . $li->user->GetAcronym() . '</a> ';
+        if ($li->user->IsAdministrator()) {
+            $items .= '<a href="' . create_url('acp') . '">acp</a> ';
+        }
+        $items .= '<a href="' . create_url('user/logout') . '">logout</a>';
+    } else {
+        $items = '<a href="' . create_url('user/login') . '">login</a>';
+    }
+    return "<nav>$items</nav>";
+}

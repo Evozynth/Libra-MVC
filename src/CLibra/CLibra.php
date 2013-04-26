@@ -15,6 +15,7 @@ class CLibra implements ISingleton {
     public $views;
     public $session;
     public $timer = array();
+    public $user;
 	
 	/**
 	 * Constructor
@@ -23,7 +24,7 @@ class CLibra implements ISingleton {
 	    // Time page generation
 	    $this->timer['first'] = microtime(true);
         
-		// include the site specific config.php and create a ref to $li to be used by config.php
+		// Include the site specific config.php and create a ref to $li to be used by config.php
 		$li = &$this;
 		require(LIBRA_SITE_PATH.'/config.php');
         
@@ -36,12 +37,16 @@ class CLibra implements ISingleton {
         // Set default date/time-zone
         date_default_timezone_set($this->config['timezone']);
         
+        // Create a database object
         if (isset($this->config['database'][0]['dsn'])) {
             $this->db = new CDatabase($this->config['database'][0]['dsn']);
         }
         
         // Create a container for all views and theme data
         $this->views = new CViewContainer();
+        
+        // Create an object for the user
+        $this->user = new CMUser($this);
 	}
 	
 	/**
