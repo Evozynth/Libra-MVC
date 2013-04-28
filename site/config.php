@@ -67,11 +67,11 @@ $li->config['language'] = 'en';
  * which is called in the frontcontroller phase from index.php.
  */
 $li->config['controllers'] = array(
-	'index' => array('enabled' => true, 'class' => 'CCIndex'),
-	'developer' => array('enabled' => true, 'class' => 'CCDeveloper'),
-	'guestbook' => array('enabled' => true, 'class' => 'CCGuestbook'),
-    'user'      => array('enabled' => true, 'class' => 'CCUser'),
-    'acp'       => array('enabled' => true, 'class' => 'CCAdminControlPanel'),
+    'index'        => array('enabled' => true, 'class' => 'CCIndex'),
+	'developer'    => array('enabled' => true, 'class' => 'CCDeveloper'),
+	'guestbook'    => array('enabled' => true, 'class' => 'CCGuestbook'),
+    'user'         => array('enabled' => true, 'class' => 'CCUser'),
+    'acp'          => array('enabled' => true, 'class' => 'CCAdminControlPanel'),
 );
 
 /**

@@ -55,3 +55,8 @@ div.success {
 	border-color: #4aea15;
 	background-color: #a5f48a;
 }
+
+div.error {
+	border-color: #800000;
+	background-color: #f87676;
+}
