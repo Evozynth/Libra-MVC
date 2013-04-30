@@ -82,7 +82,7 @@ function create_url($urlOrController = null, $method = null, $arguments = null) 
 function login_menu() {
     $li = CLibra::Instance();
     if ($li->user->IsAuthenticated()) {
-        $items = '<a href="' . create_url('user/profile') . '">' . $li->user->GetAcronym() . '</a> ';
+        $items = '<a href="' . create_url('user/profile') . '"><img class="gravatar" src="'. get_gravatar(20) . '" alt="">' . $li->user['acronym'] . '</a> ';
         if ($li->user->IsAdministrator()) {
             $items .= '<a href="' . create_url('acp') . '">acp</a> ';
         }
@@ -90,5 +90,13 @@ function login_menu() {
     } else {
         $items = '<a href="' . create_url('user/login') . '">login</a>';
     }
-    return "<nav>$items</nav>";
+    return "<nav id='loginMenu'>$items</nav>";
+}
+
+/**
+ * Get a gravatar based on the user's email.
+ */
+function get_gravatar($size = null) {
+    return 'http://www.gravatar.com/avatar/' . 
+    md5(strtolower(trim(CLibra::Instance()->user['email']))) . '.jpg' . ($size ? "?s=$size" : null);
 }

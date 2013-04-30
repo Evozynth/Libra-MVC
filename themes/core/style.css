@@ -28,6 +28,20 @@ body {
 #loginMenu {
 	float: right;
 	font-size: 0.9em;
+	line-height: 20px;
+}
+
+#loginMenu a {
+	text-decoration: none;
+}
+
+#loginMenu a:hover {
+	text-decoration: underline;
+}
+
+#loginMenu .gravatar {
+	float: left;
+	margin-right: 5px;
 }
 
 #footer {
