@@ -40,16 +40,16 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess {
             'drop table user'           => "DROP TABLE IF EXISTS User;",
             'drop table group'          => "DROP TABLE IF EXISTS Groups;",
             'drop table user2group'     => "DROP TABLE IF EXISTS User2Groups;",
-            'create table user'         => "CREATE TABLE IF NOT EXISTS User (id INTEGER PRIMARY KEY, acronym TEXT KEY, name TEXT, email TEXT, password TEXT, created DATETIME default (datetime('now')), updated DATETIME default NULL);",
+            'create table user'         => "CREATE TABLE IF NOT EXISTS User (id INTEGER PRIMARY KEY, acronym TEXT KEY, name TEXT, email TEXT, algorithm TEXT, salt TEXT, password TEXT, created DATETIME default (datetime('now')), updated DATETIME default NULL);",
             'create table group'        => "CREATE TABLE IF NOT EXISTS Groups (id INTEGER PRIMARY KEY, acronym TEXT KEY, name TEXT, created DATETIME default (datetime('now')), updated DATETIME default NULL);",
             'create table user2group'   => "CREATE TABLE IF NOT EXISTS User2Groups (idUser INTEGER, idGroups INTEGER, created DATETIME default (datetime('now')), PRIMARY KEY(idUser, idGroups));",
-            'insert into user'          => "INSERT INTO User (acronym, name, email, password) VALUES (?,?,?,?);",
+            'insert into user'          => "INSERT INTO User (acronym, name, email, algorithm, salt, password) VALUES (?,?,?,?,?,?);",
             'insert into group'         => "INSERT INTO Groups (acronym, name) VALUES (?, ?);",
             'insert into user2group'    => "INSERT INTO User2Groups (idUser, idGroups) VALUES (?,?);",
-            'check user password'       => "SELECT * FROM User WHERE password=? AND (acronym=? OR email=?);",
+            'check user password'       => "SELECT * FROM User WHERE (acronym=? OR email=?);",
             'get group memberships'     => "SELECT * FROM Groups AS g INNER JOIN User2Groups AS ug ON g.id=ug.idGroups WHERE ug.idUser=?;",
             'update profile'            => "UPDATE User SET name=?, email=?, updated=datetime('now') WHERE id=?;",
-            'update password'           => "UPDATE User SET password=?, updated=datetime('now') WHERE id=?;",
+            'update password'           => "UPDATE User SET algorithm=?, salt=?, password=?, updated=datetime('now') WHERE id=?;",
         );
         
         if (!isset($queries[$key])) {
@@ -69,9 +69,11 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess {
             $this->db->ExecuteQuery(self::SQL('create table user'));
             $this->db->ExecuteQuery(self::SQL('create table group'));
             $this->db->ExecuteQuery(self::SQL('create table user2group'));
-            $this->db->ExecuteQuery(self::SQL('insert into user'), array('root', 'The Administrator', 'stanley.svensson@gmail.com', 'root'));
+            $password = $this->CreatePassword('root');
+            $this->db->ExecuteQuery(self::SQL('insert into user'), array('root', 'The Administrator', 'stanley.svensson@gmail.com', $password['algorithm'], $password['salt'], $password['password']));
             $idRootUser = $this->db->LastInsertId();
-            $this->db->ExecuteQuery(self::SQL('insert into user'), array('doe', 'John Doe', 'doe@mail.com', 'doe'));
+            $password = $this->CreatePassword('doe');
+            $this->db->ExecuteQuery(self::SQL('insert into user'), array('doe', 'John Doe', 'doe@mail.com', $password['algorithm'], $password['salt'], $password['password']));
             $idDoeUser = $this->db->LastInsertId();
             $this->db->ExecuteQuery(self::SQL('insert into group'), array('admin', 'The Administrator Group'));
             $idAdminGroup = $this->db->LastInsertId();
@@ -96,8 +98,15 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess {
      * @return boolean true if match else false.
      */
     public function Login($acronymOrEmail, $password) {
-        $user = $this->db->ExecuteSelectQueryAndFetchAll(self::SQL('check user password'), array($password, $acronymOrEmail, $acronymOrEmail));
+        $user = $this->db->ExecuteSelectQueryAndFetchAll(self::SQL('check user password'), array($acronymOrEmail, $acronymOrEmail));
         $user = (isset($user[0])) ? $user[0] : null;
+        if (!$user) {
+            return false;
+        } elseif (!$this->CheckPassword($password, $user['algorithm'], $user['salt'], $user['password'])) {
+            return false;
+        }
+        unset($user['algorithm']);
+        unset($user['salt']);
         unset($user['password']);
         if ($user) {
             $user['isAuthenticated'] = true;
@@ -126,6 +135,49 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess {
     }
     
     /**
+     * Crete password.
+     * 
+     * @param string $plain The password in plain text to use as base.
+     * @param string $algorithm Stating what algorithm to use, plain, md5, md5salt, sha1, sha1salt. Defaults to the setting of site/config.php
+     * @return array With 'salt' and 'password'.
+     */
+    public function CreatePassword($plain, $algorithm = null) {
+        $password = array(
+            'algorithm' => ($algorithm ? $algorithm : CLibra::Instance()->config['hashing_algorithm']),
+            'salt' => null
+        );
+        switch ($password['algorithm']) {
+            case 'sha1salt': $passwod['salt'] = sha1(microtime()); $password['password'] = sha1($password['salt'].$plain); break;
+            case 'md5salt': $password['salt'] = md5(microtime()); $password['password'] = md5($password['salt'].$plain); break;
+            case 'sha1': $password['password'] = sha1($plain); break;
+            case 'md5': $password['password'] = md5($plain); break;
+            case 'plain': $password['password'] = $plain; break;
+            default: throw new Exception('Unknown hashing algorithm');
+        }
+        return $password;
+    }
+    
+    /**
+     * Check if password matches.
+     * 
+     * @param string $plain The password in plain text to use as base.
+     * @param string $algorithm The algorithm used to hash the user salt/password.
+     * @param string $salt The user salted string to use to hash the password.
+     * @param string $password The hashed user password that should match.
+     * @return boolean true if match, else false.
+     */
+    public function CheckPassword($plain, $algorithm, $salt, $password) {
+        switch ($algorithm) {
+            case 'sha1salt': return $password === sha1($salt.$plain); break;
+            case 'md5salt': return $password === md5($salt.$plain); break;
+            case 'sha1': return $password === sha1($plain); break;
+            case 'md5': return $password === md5($plain); break;
+            case 'plain': return $password === $plain; break;
+            default: throw new Exception('Unknown hashing algorithm');
+        }
+    }
+    
+    /**
      * Save user profile to database and update user profile in session.
      * 
      * @return boolean true if success else false.
@@ -142,8 +194,9 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess {
      * @param string $password The new password.
      * @return boolean true if success else false.
      */
-    public function ChangePassword($password) {
-        $this->db->ExecuteQuery(self::SQL('update password'), array($password, $this['id']));
+    public function ChangePassword($plain) {
+        $password = $this->CreatePassword($plain);
+        $this->db->ExecuteQuery(self::SQL('update password'), array($password['algorithm'], $password['salt'], $password['password'], $this['id']));
         return $this->db->RowCount() === 1;
     }
     
