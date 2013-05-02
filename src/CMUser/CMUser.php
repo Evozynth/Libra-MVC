@@ -70,7 +70,7 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess {
             $this->db->ExecuteQuery(self::SQL('create table group'));
             $this->db->ExecuteQuery(self::SQL('create table user2group'));
             $password = $this->CreatePassword('root');
-            $this->db->ExecuteQuery(self::SQL('insert into user'), array('root', 'The Administrator', 'stanley.svensson@gmail.com', $password['algorithm'], $password['salt'], $password['password']));
+            $this->db->ExecuteQuery(self::SQL('insert into user'), array('root', 'The Administrator', 'admin@gmail.com', $password['algorithm'], $password['salt'], $password['password']));
             $idRootUser = $this->db->LastInsertId();
             $password = $this->CreatePassword('doe');
             $this->db->ExecuteQuery(self::SQL('insert into user'), array('doe', 'John Doe', 'doe@mail.com', $password['algorithm'], $password['salt'], $password['password']));
@@ -82,7 +82,7 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess {
             $this->db->ExecuteQuery(self::SQL('insert into user2group'), array($idRootUser, $idAdminGroup));
             $this->db->ExecuteQuery(self::SQL('insert into user2group'), array($idRootUser, $idUserGroup));
             $this->db->ExecuteQuery(self::SQL('insert into user2group'), array($idDoeUser, $idUserGroup));
-            $this->session->AddMessage('notice', 'Successfully created the database tables and created a default admin user as root:root and an ordinary user doe:doe.');
+            $this->session->AddMessage('success', 'Successfully created the database tables and created a default admin user as root:root and an ordinary user doe:doe.');
         } catch(Exception $e) {
             die("$e<br>Failed to open database: " . $this->config['database'][0]['dsn']);
         }
@@ -147,7 +147,7 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess {
             'salt' => null
         );
         switch ($password['algorithm']) {
-            case 'sha1salt': $passwod['salt'] = sha1(microtime()); $password['password'] = sha1($password['salt'].$plain); break;
+            case 'sha1salt': $password['salt'] = sha1(microtime()); $password['password'] = sha1($password['salt'].$plain); break;
             case 'md5salt': $password['salt'] = md5(microtime()); $password['password'] = md5($password['salt'].$plain); break;
             case 'sha1': $password['password'] = sha1($plain); break;
             case 'md5': $password['password'] = md5($plain); break;

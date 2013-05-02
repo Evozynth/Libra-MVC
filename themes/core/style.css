@@ -74,3 +74,12 @@ div.error {
 	border-color: #800000;
 	background-color: #f87676;
 }
+
+.validation-failed {
+	border: 2px solid red;
+}
+
+.validation-message {
+	color: red;
+	font-size: smaller;
+}

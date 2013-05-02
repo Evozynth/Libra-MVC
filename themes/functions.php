@@ -8,13 +8,26 @@
  * Print debuginformation from the framework 
  */
 function get_debug() {
+    // Only if debug is wanted.
     $li = CLibra::Instance();
+    if (empty($li->config['debug'])) {
+        return;
+    }
+    
+    // Get the debug output.
     $html = null;
     if (isset($li->config['debug']['db-num-queries']) && $li->config['debug']['db-num-queries'] && isset($li->db)) {
-        $html .= "<p>Database made " . $li->db->GetNumQueries() . " queries.</p>";
+        $flash = $li->session->GetFlash('database_numQueries');
+        $flash = $flash ? "$flash + " : null;
+        $html .= "<p>Database made $flash" . $li->db->GetNumQueries() . " queries.</p>";
     }
     if (isset($li->config['debug']['db-queries']) && $li->config['debug']['db-queries'] && isset($li->db)) {
-        $html .= "<p>Database made the following queries</p><pre>" . implode('<br><br>', $li->db->GetQueries()) . "</pre>";
+        $flash = $li->session->GetFlash('database_queries');
+        $queries = $li->db->GetQueries();
+        if ($flash) {
+            $queries = array_merge($flash, $queries);
+        }
+        $html .= "<p>Database made the following queries</p><pre>" . implode('<br><br>', $queries) . "</pre>";
     }
     if (isset($li->config['debug']['libra']) && $li->config['debug']['libra']) {
         $html = '<h2>Debuginformation</h2><hr>

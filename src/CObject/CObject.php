@@ -38,7 +38,7 @@ class CObject {
     protected function RedirectTo($urlOrController = null, $method = null) {
         $li = CLibra::Instance();
         if (isset($li->config['debug']['db-num-queries']) && $li->config['debug']['db-num-queries'] && isset($li->db)) {
-            $this->session->SetFlash('database_queries', $this->db->GetNumQueries());
+            $this->session->SetFlash('database_numQueries', $this->db->GetNumQueries());
         }
         if (isset($li->config['debug']['db-queries']) && $li->config['debug']['db-queries'] && isset($li->db)) {
             $this->session->SetFlash('database_queries', $this->db->GetQueries());
