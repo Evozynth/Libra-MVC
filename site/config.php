@@ -91,3 +91,8 @@ $li->config['database'][0]['dsn'] = 'sqlite:' . LIBRA_SITE_PATH . '/data/.ht.sql
  * How to hash password of new users, choose from: plain, md5salt, md5, sha1salt, sha1
  */
 $li->config['hashing_algorithm'] = 'sha1salt';
+
+/**
+ * Allow or dissallow creation of new user accounts.
+ */
+$li->config['create_new_users'] = true;

@@ -87,6 +87,25 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess {
             die("$e<br>Failed to open database: " . $this->config['database'][0]['dsn']);
         }
     }
+
+    /**
+     * Create a new user.
+     * 
+     * @param string $acronym The acronym.
+     * @param string $password The password in plain text to use as base.
+     * @param string $name The user full name.
+     * @param string $email The user email.
+     * @return boolean true if user was created or else false and sets failure message in session.
+     */
+    public function Create($acronym, $password, $name, $email) {
+        $pwd = $this->CreatePassword($password);
+        $this->db->ExecuteQuery(self::SQL('insert into user'), array($acronym, $name, $email, $pwd['algorithm'], $pwd['salt'], $pwd['password']));
+        if ($this->db->RowCount() == 0) {
+            $this->AddMessage('error', 'Failed to create user.');
+            return false;
+        }
+        return true;
+    }
     
     /**
      * Login by authenticate the user and password. Store user information in session if success.

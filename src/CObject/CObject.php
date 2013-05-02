@@ -96,6 +96,6 @@ class CObject {
      * @param string $arguments The extra arguments to send to the method. 
      */
     protected function CreateUrl($urlOrController = null, $method = null, $arguments = null) {
-        $this->request->CreateUrl($urlOrController, $method, $arguments);
+        return $this->request->CreateUrl($urlOrController, $method, $arguments);
     }
 }
