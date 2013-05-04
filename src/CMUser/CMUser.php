@@ -9,7 +9,7 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess {
     /**
      * Properties
      */
-    public $profile = array();
+    public $profile;
     
     
     /**
@@ -20,6 +20,10 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess {
         $profile = $this->session->GetAuthenticatedUser();
         $this->profile = is_null($profile) ? array() : $profile;
         $this['isAuthenticated'] = is_null($profile) ? false : true;
+        if (!$this['isAuthenticated']) {
+            $this['id'] = 1;
+            $this['acronym'] = 'anonymous';
+        }
     }
     
     /**
@@ -58,7 +62,7 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess {
         return $queries[$key];
     }
     
-    /**
+    /** 
      * Init the database and create appropriate tables.
      */
     public function Init() {
@@ -69,6 +73,7 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess {
             $this->db->ExecuteQuery(self::SQL('create table user'));
             $this->db->ExecuteQuery(self::SQL('create table group'));
             $this->db->ExecuteQuery(self::SQL('create table user2group'));
+            $this->db->ExecuteQuery(self::SQL('insert into user'), array('anonymous', 'Anonymous, not authenticated', null, 'plain', null, null));
             $password = $this->CreatePassword('root');
             $this->db->ExecuteQuery(self::SQL('insert into user'), array('root', 'The Administrator', 'admin@gmail.com', $password['algorithm'], $password['salt'], $password['password']));
             $idRootUser = $this->db->LastInsertId();
@@ -82,29 +87,10 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess {
             $this->db->ExecuteQuery(self::SQL('insert into user2group'), array($idRootUser, $idAdminGroup));
             $this->db->ExecuteQuery(self::SQL('insert into user2group'), array($idRootUser, $idUserGroup));
             $this->db->ExecuteQuery(self::SQL('insert into user2group'), array($idDoeUser, $idUserGroup));
-            $this->session->AddMessage('success', 'Successfully created the database tables and created a default admin user as root:root and an ordinary user doe:doe.');
+            $this->AddMessage('success', 'Successfully created the database tables and created a default admin user as root:root and an ordinary user doe:doe.');
         } catch(Exception $e) {
             die("$e<br>Failed to open database: " . $this->config['database'][0]['dsn']);
         }
-    }
-
-    /**
-     * Create a new user.
-     * 
-     * @param string $acronym The acronym.
-     * @param string $password The password in plain text to use as base.
-     * @param string $name The user full name.
-     * @param string $email The user email.
-     * @return boolean true if user was created or else false and sets failure message in session.
-     */
-    public function Create($acronym, $password, $name, $email) {
-        $pwd = $this->CreatePassword($password);
-        $this->db->ExecuteQuery(self::SQL('insert into user'), array($acronym, $name, $email, $pwd['algorithm'], $pwd['salt'], $pwd['password']));
-        if ($this->db->RowCount() == 0) {
-            $this->AddMessage('error', 'Failed to create user.');
-            return false;
-        }
-        return true;
     }
     
     /**
@@ -151,6 +137,25 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess {
         $this->session->UnsetAuthenticatedUser();
         $this->profile = array();
         $this->session->AddMessage('success', "You have logged out");
+    }
+
+    /**
+     * Create a new user.
+     * 
+     * @param string $acronym The acronym.
+     * @param string $password The password in plain text to use as base.
+     * @param string $name The user full name.
+     * @param string $email The user email.
+     * @return boolean true if user was created or else false and sets failure message in session.
+     */
+    public function Create($acronym, $password, $name, $email) {
+        $pwd = $this->CreatePassword($password);
+        $this->db->ExecuteQuery(self::SQL('insert into user'), array($acronym, $name, $email, $pwd['algorithm'], $pwd['salt'], $pwd['password']));
+        if ($this->db->RowCount() == 0) {
+            $this->AddMessage('error', 'Failed to create user.');
+            return false;
+        }
+        return true;
     }
     
     /**
