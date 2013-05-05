@@ -1,6 +1,6 @@
 <?php if ($content['id']):?>
-    <h1><?=$content['title']?></h1>
-    <p><?=$content['data']?></p>
+    <h1><?=esc($content['title'])?></h1>
+    <p><?=$content->getFilteredData()?></p>
     <p class="smaller-text silent">
         <a href="<?=create_url("content/edit/{$content['id']}")?>">edit</a>
         <a href="<?=create_url("content")?>">View all</a>

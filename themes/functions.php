@@ -123,3 +123,14 @@ function get_gravatar($size = null) {
 function esc($str) {
     return htmlent($str);
 }
+
+/**
+ * Filter data according to a filter. Uses CMContent::Filter()
+ * 
+ * @param string $data The data-string to filter.
+ * @param string $filter The filter to use.
+ * @return string The filtered string.
+ */
+function filter_data($data, $filter) {
+    return CMContent::Filter($data, $filter);
+}
