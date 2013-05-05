@@ -33,9 +33,13 @@ class CObject {
     }
     
     /**
-     * Redirect to another url and store the session
+     * Redirect to another url and store the session.
+     * 
+     * @param string $url The relative url or the controller.
+     * @param string $method The method to use, $url is then the controller or empty for current controller.
+     * @param string $arguments The extra arguments to send to the method.
      */
-    protected function RedirectTo($urlOrController = null, $method = null) {
+    protected function RedirectTo($urlOrController = null, $method = null, $arguments = null) {
         $li = CLibra::Instance();
         if (isset($li->config['debug']['db-num-queries']) && $li->config['debug']['db-num-queries'] && isset($li->db)) {
             $this->session->SetFlash('database_numQueries', $this->db->GetNumQueries());
@@ -47,16 +51,17 @@ class CObject {
             $this->session->SetFlash('timer', $li->timer);
         }
         $this->session->StoreInSession();
-        header('Location: ' . $this->request->CreateUrl($urlOrController, $method));
+        header('Location: ' . $this->request->CreateUrl($urlOrController, $method, $arguments));
     }
     
     /**
      * Redirect to a method within the current controller. Defaults to index-method. Uses RedirectTo().
      * 
      * @param string $method Name of the method, default is index method.
+     * @param string $arguments The extra arguments to send to the method.
      */
-    protected function RedirectToController($method = null) {
-        $this->RedirectTo($this->request->controller, $method);
+    protected function RedirectToController($method = null, $arguments = null) {
+        $this->RedirectTo($this->request->controller, $method, $arguments);
     }
     
     /**

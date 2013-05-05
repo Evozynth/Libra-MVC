@@ -113,3 +113,13 @@ function get_gravatar($size = null) {
     return 'http://www.gravatar.com/avatar/' . 
     md5(strtolower(trim(CLibra::Instance()->user['email']))) . '.jpg' . ($size ? "?s=$size" : null);
 }
+
+/**
+ * Escape data to make it safe to write to in the browser.
+ * 
+ * @param string $str String to escape.
+ * @return string The escaped string.
+ */
+function esc($str) {
+    return htmlent($str);
+}

@@ -5,8 +5,9 @@
 <?php if ($contents != null): ?>
     <ul>
         <?php foreach ($contents as $val): ?>
-            <li><?=$val['id']?>, <?=$val['title']?> by <?=$val['owner']?>
+            <li><?=$val['id']?>, <?=esc($val['title'])?> by <?=$val['owner']?>
                 <a href="<?=create_url("content/edit/{$val['id']}")?>">edit</a>
+                <a href="<?=create_url("page/view/{$val['id']}")?>">view</a>
             </li>
         <?php endforeach; ?>
     </ul>
@@ -18,4 +19,5 @@
 <ul>
     <li><a href="<?=create_url('content/init')?>">Initialize database, create tables and sample content.</a></li>
     <li><a href="<?=create_url('content/create')?>">Create new content</a></li>
+    <li><a href="<?=create_url('blog')?>">View as blog</a></li>
 </ul>

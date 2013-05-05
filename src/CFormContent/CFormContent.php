@@ -33,11 +33,11 @@ class CFormContent extends CForm {
      * Callback to save the form content to database.
      */
     public function DoSave($form, $content) {
-        $content['id'] = $form['id']['value'];
-        $content['title'] = $form['title']['value'];
-        $content['key'] = $form['key']['value'];
-        $content['data'] = $form['data']['value'];
-        $content['type'] = $form['type']['value'];
+        $content['id']      = $form['id']['value'];
+        $content['title']   = $form['title']['value'];
+        $content['key']     = $form['key']['value'];
+        $content['data']    = $form['data']['value'];
+        $content['type']    = $form['type']['value'];
         return $content->Save();
     }
 }

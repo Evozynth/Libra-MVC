@@ -32,25 +32,10 @@ class CFormElement implements ArrayAccess {
     /**
      * Implementing ArrayAccess for this->attributes
      */
-    public function offsetSet($offset, $value) {
-        if (is_null($offset)) {
-            $this->attributes[] = $value;
-        } else {
-            $this->attributes[$offset] = $value;
-        }
-    }
-
-    public function offsetExists($offset) {
-        return isset($this->attributes[$offset]);
-    }
-
-    public function offsetUnset($offset) {
-        unset($this->attributes[$offset]);
-    }
-
-    public function offsetGet($offset) {
-        return isset($this->attributes[$offset]) ? $this->attributes[$offset] : null;
-    }
+    public function offsetSet($offset, $value) { if (is_null($offset)) { $this->attributes[] = $value; } else { $this->attributes[$offset] = $value; }}
+    public function offsetExists($offset) { return isset($this->attributes[$offset]); }
+    public function offsetUnset($offset) { unset($this->attributes[$offset]); }
+    public function offsetGet($offset) { return isset($this->attributes[$offset]) ? $this->attributes[$offset] : null; }
 
     /**
      * Get HTML code for a element.
@@ -238,25 +223,10 @@ class CForm implements ArrayAccess {
     /**
      * Implementing ArrayAccess for this->elements
      */
-    public function offsetSet($offset, $value) {
-        if (is_null($offset)) {
-            $this->elements[] = $value;
-        } else {
-            $this->elements[$offset] = $value;
-        }
-    }
-
-    public function offsetExists($offset) {
-        return isset($this->elements[$offset]);
-    }
-
-    public function offsetUnset($offset) {
-        unset($this->elements[$offset]);
-    }
-
-    public function offsetGet($offset) {
-        return isset($this->elements[$offset]) ? $this->elements[$offset] : null;
-    }
+    public function offsetSet($offset, $value) { if (is_null($offset)) { $this->elements[] = $value; } else { $this->elements[$offset] = $value; }}
+    public function offsetExists($offset) { return isset($this->elements[$offset]); }
+    public function offsetUnset($offset) { unset($this->elements[$offset]); }
+    public function offsetGet($offset) { return isset($this->elements[$offset]) ? $this->elements[$offset] : null; }
 
     /**
      * Add a form element
