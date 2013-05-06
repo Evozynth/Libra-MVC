@@ -81,7 +81,10 @@ class CMContent extends CObject implements IHasSQL, ArrayAccess {
             $this->db->ExecuteQuery(self::SQL('insert content'), array('about', 'page', 'About Page', "This is a demo page, this could be your personal about-page.", 'plain', $this->user['id']));
             $this->db->ExecuteQuery(self::SQL('insert content'), array('download', 'page', 'Download Page', "This is a demo page, this could be your personal download-page.", 'plain', $this->user['id']));
             $this->db->ExecuteQuery(self::SQL('insert content'), array('bbcode', 'page', 'Page with BBCode', "This is a demo page with some BBCode-formatting.\n\n[b]Text in bold[/b] and [i]text in italic[/i] and [url=http://www.dbwebb.se]a link to dbwebb.se[/url]. You can also include images using bbcode, such as the Lydia logo: [img]http://dbwebb.se/lydia/current/themes/core/logo_80x80.png[/img]", 'bbcode', $this->user['id']));
-            $this->db->ExecuteQuery(self::SQL('insert content'), array('htmlpurify', 'page', 'Page with HTMLPurifier', "This is a demo page with some HTML code intended to run through <a href='http://htmlpurifier.org/'>HTMLPurify</a>. Edit the source and insert HTML code and see if it works.\n\n<b>Text in bold</b> and <i>text in italic</i> and <a href='http://dbwebb.se'>a link to dbwebb.se</a>. JavaScript, like this: <javascript>alert('hej');</javascript> should however be removed.", 'htmlpurify', $this->user['id']));
+            $this->db->ExecuteQuery(self::SQL('insert content'), array('htmlpurify', 'page', 'Page with HTMLPurifier', "This is a demo page with some HTML code intended to run through <a href='http://htmlpurifier.org/' target=\"_blank\">HTMLPurify</a>. Edit the source and insert HTML code and see if it works.\n\n<b>Text in bold</b> and <i>text in italic</i> and <a href='http://dbwebb.se'>a link to dbwebb.se</a>. JavaScript, like this: <javascript>alert('hej');</javascript> should however be removed.", 'htmlpurify', $this->user['id']));
+            $this->db->ExecuteQuery(self::SQL('insert content'), array('markdown', 'page', 'Page with Markdown', "This is a demo page with some Markdown text intended to run through [Markdown](https://github.com/michelf/php-markdown). Edit the source and insert Markdown text and see if it works.\n\n**Text in bold** and *text in italic* and [a link to dbwebb.se](http://dbwebb.se).", 'markdown', $this->user['id']));
+            $this->db->ExecuteQuery(self::SQL('insert content'), array('smartypants', 'page', 'Page with SmartyPants', "This is a demo page with some html code intended to run through <a href='http://michelf.ca/projects/php-smartypants/' target='_blank'>SmartyPants Typographer</a>. Edit the source and insert html code and see if it works.\n\nStraight qoutes is converted to curly -- \"Text in double qoutes\" and 'Text in single qoutes'. Three consecutive dots (...) into an ellipsis entity.", 'smartypants', $this->user['id']));
+            $this->db->ExecuteQuery(self::SQL('insert content'), array('Combined filters', 'page', 'Page with Combined filters', "This is a demo page with some html code intended to run through smartypants, bbcode, htmlpurify and clickable. Edit the source and insert html code to see if it works.\n\nStraight qoutes is converted to curly -- \"Text in double qoutes\" and 'Text in single qoutes'. Three consecutive dots (...) into an ellipsis entity.\n\nLinks should atutomatically be created -- http://php.net/.\n\n It should work also with bbcode mixed in: [b]this should be bould text[/b]. \n\n", 'smartypants, clickable, htmlpurify, bbcode', $this->user['id']));
             $this->AddMessage('success', 'Successfully created the database tables and created a deafult "Hello World" blog post, owned by you.');
         } catch(Exception $e) {
             die("$e<br>Failed to open database: " . $this->config['database'][0]['dsn']);
@@ -148,22 +151,16 @@ class CMContent extends CObject implements IHasSQL, ArrayAccess {
     }
     
     /**
-     * Filter content according to a filter.
+     * Filter content according to a filter. Uses CTextFilter to process data.
      * 
      * @param string $data String of text to filter and format according its filter settings.
      * @param string $filter The type of filter to use, plain, ...
      * @return string With the filtered data.
      */
     public static function Filter($data, $filter) {
-        switch ($filter) {
-            /*case 'php': $data = nl2br(makeClickable(eval('?>'.$data))); break;*/
-            /*case 'html': $data = nl2br(makeClickable($data)); break;*/
-            case 'htmlpurify': $data = nl2br(CHTMLPurifier::Purify($data)); break;
-            case 'bbcode': $data = nl2br(bbcode2html(htmlent($data))); break;
-            case 'plain':
-            default:  $data = nl2br(makeClickable(htmlent($data))); break;
-        }
-        return $data;
+        $filter = explode(',', trim($filter, ' ,'));
+        return CTextFilter::Filter($data, $filter);
+       
     }
     
     /**

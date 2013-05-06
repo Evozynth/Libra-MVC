@@ -23,6 +23,14 @@ spl_autoload_register('autoload');
 
 
 /**
+ * Set a default exception handler and enable logging in it.
+ */
+function exception_handler($exception) {
+    echo "Libra: Uncaught exception: <p>" . $exception->getMessage() . "</p><pre>" . $exception->getTraceAsString() . "</pre>";
+}
+set_exception_handler('exception_handler');
+
+/**
  * Helper, wrap html_entities with correct character encoding
  */
 function htmlent($str, $flags = ENT_COMPAT) {
@@ -39,14 +47,6 @@ function makeClickable($text) {
             ), $text
     );
 }
-
-/**
- * Set a default exception handler and enable logging in it.
- */
-function exception_handler($exception) {
-    echo "Libra: Uncaught exception: <p>" . $exception->getMessage() . "</p><pre>" . $exception->getTraceAsString() . "</pre>";
-}
-set_exception_handler('exception_handler');
 
 /**
  * Helper, BBCode formatting converting to HTML.
