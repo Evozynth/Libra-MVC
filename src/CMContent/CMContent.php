@@ -81,6 +81,7 @@ class CMContent extends CObject implements IHasSQL, ArrayAccess {
             $this->db->ExecuteQuery(self::SQL('insert content'), array('about', 'page', 'About Page', "This is a demo page, this could be your personal about-page.", 'plain', $this->user['id']));
             $this->db->ExecuteQuery(self::SQL('insert content'), array('download', 'page', 'Download Page', "This is a demo page, this could be your personal download-page.", 'plain', $this->user['id']));
             $this->db->ExecuteQuery(self::SQL('insert content'), array('bbcode', 'page', 'Page with BBCode', "This is a demo page with some BBCode-formatting.\n\n[b]Text in bold[/b] and [i]text in italic[/i] and [url=http://www.dbwebb.se]a link to dbwebb.se[/url]. You can also include images using bbcode, such as the Lydia logo: [img]http://dbwebb.se/lydia/current/themes/core/logo_80x80.png[/img]", 'bbcode', $this->user['id']));
+            $this->db->ExecuteQuery(self::SQL('insert content'), array('htmlpurify', 'page', 'Page with HTMLPurifier', "This is a demo page with some HTML code intended to run through <a href='http://htmlpurifier.org/'>HTMLPurify</a>. Edit the source and insert HTML code and see if it works.\n\n<b>Text in bold</b> and <i>text in italic</i> and <a href='http://dbwebb.se'>a link to dbwebb.se</a>. JavaScript, like this: <javascript>alert('hej');</javascript> should however be removed.", 'htmlpurify', $this->user['id']));
             $this->AddMessage('success', 'Successfully created the database tables and created a deafult "Hello World" blog post, owned by you.');
         } catch(Exception $e) {
             die("$e<br>Failed to open database: " . $this->config['database'][0]['dsn']);
@@ -157,6 +158,7 @@ class CMContent extends CObject implements IHasSQL, ArrayAccess {
         switch ($filter) {
             /*case 'php': $data = nl2br(makeClickable(eval('?>'.$data))); break;*/
             /*case 'html': $data = nl2br(makeClickable($data)); break;*/
+            case 'htmlpurify': $data = nl2br(CHTMLPurifier::Purify($data)); break;
             case 'bbcode': $data = nl2br(bbcode2html(htmlent($data))); break;
             case 'plain':
             default:  $data = nl2br(makeClickable(htmlent($data))); break;
@@ -170,6 +172,6 @@ class CMContent extends CObject implements IHasSQL, ArrayAccess {
      * @return string The filtered data.
      */
     public function GetFilteredData() {
-        return $this->Filter($this['data'], $this['filter']);
+        return self::Filter($this['data'], $this['filter']);
     }
 }
