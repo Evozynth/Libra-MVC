@@ -116,13 +116,16 @@ class CLibra implements ISingleton {
 	    // Save to session before output anything
 	    $this->session->StoreInSession();
         
+        // Is theme enabled?
+        if (!isset($this->config['theme'])) { return; }
+        
 	    // Get the paths and settings for the theme
 	    $themeName = $this->config['theme']['name'];
         $themePath = LIBRA_INSTALL_PATH . "/themes/{$themeName}";
         $themeUrl  = $this->request->base_url . "themes/{$themeName}"; 
         
         // Add the stylesheet path to the $li->data array
-        $this->data['stylesheet'] = "{$themeUrl}/style.css";
+        $this->data['stylesheet'] = "{$themeUrl}/".$this->config['theme']['stylesheet'];
         
         // Include the global functions.php and the functions.php that are part of the theme
         $li = &$this;
@@ -135,7 +138,8 @@ class CLibra implements ISingleton {
         // Extract $li->data to own variables and handover to the template file
         extract($this->data);
         extract($this->views->GetData());
-        include("{$themePath}/default.tpl.php");
+        $templateFile = (isset($this->config['theme']['template_file'])) ? $this->config['theme']['template_file'] : 'default.tpl.php';
+        include("{$themePath}/{$templateFile}");
         
 	}
 	

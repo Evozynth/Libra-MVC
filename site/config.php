@@ -68,6 +68,7 @@ $li->config['language'] = 'en';
  */
 $li->config['controllers'] = array(
     'index'        => array('enabled' => true, 'class' => 'CCIndex'),
+    'theme'        => array('enabled' => true, 'class' => 'CCTheme'),
 	'developer'    => array('enabled' => true, 'class' => 'CCDeveloper'),
 	'guestbook'    => array('enabled' => true, 'class' => 'CCGuestbook'),
     'user'         => array('enabled' => true, 'class' => 'CCUser'),
@@ -82,7 +83,9 @@ $li->config['controllers'] = array(
  */
 $li->config['theme'] = array(
     // The name of the theme in the theme directory
-    'name' => 'core',
+    'name'          => 'grid',          // The name of the theme in the theme directory
+    'stylesheet'    => 'style.php',     // Main stylesheet to include in template files
+    'template_file' => 'index.tpl.php'  // Default template file, else use default.tpl.php
 );
 
 /**

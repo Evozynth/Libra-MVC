@@ -1,0 +1,245 @@
+/**
+ * Description: Grid theme for Libra based on less, lessphp and semantic.gs.
+ */
+
+/** ---------------------------------------------------------------------------
+ * Semantic.gs
+ */
+@import url(semantic.gs/stylesheets/less/grid.less);
+
+/** ---------------------------------------------------------------------------
+ * 	Settings
+ */
+@bgcolor1: #eee;
+@bgcolor2: #fff;
+@bgtest: hsla(0, 0%, 90%, 0.5);
+@color: #333;
+@font: 1em Verdana, Arial, Helvetica, sans-serif;
+
+/* Wrap elements to site width in grid layout */
+.wrap() {
+    width: @total-width;
+    margin: 0 auto;
+    .clearfix();
+}
+
+@magic-number: 22px;
+
+/** ---------------------------------------------------------------------------
+ * Forms
+ */
+.content-edit textarea { width: 35em; height: 16em; }
+.content-edit input[type=text] { width: 20em; }
+
+label {
+    font-size: small;
+}
+
+.validation-failed {
+    border: 2px solid red;
+}
+
+.validation-message {
+    color: red;
+    font-size: smaller;
+}
+
+/** ---------------------------------------------------------------------------
+ * Structure
+ */
+html {
+    background-color: @bgcolor1;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    color: @color;
+    background-color: @bgcolor2;
+    font: @font;
+    &:hover {
+        background: #fff url(grid_12_60_20.png) repeat-y center top;
+    }
+}
+
+/** ---------------------------------------------------------------------------
+ * The header area
+ */
+@tablecell() {
+    display: table-cell;
+    verical-align: middle;
+    text-align: center;
+}
+
+#outer-wrap-header {
+    height: @magic-number * 4;
+    margin-top: @magic-number / 2;
+    margin-bottom: @magic-number / 2;
+}
+#inner-wrap-header { .wrap(); }
+#header{ .column(12); }
+
+/** ---------------------------------------------------------------------------
+ * Login menu
+ */
+#login-menu {
+    float: right;
+    font-size: smaller;
+    img.gravatar {
+        vertical-align: middle;
+        float: left;
+        margin-right: 5px;
+    }
+    a {
+        text-decoration: none;
+        &:hover { text-decoration: underline; }
+    }
+}
+
+/** ---------------------------------------------------------------------------
+ * The flash area
+ */
+#outer-wrap-flash {}
+#inner-wrap-flash {
+    .wrap();
+    height: @magic-number * 3;
+    margin-bottom: @magic-number;
+}
+#flash {
+    .column(12);
+    background-color: @bgtest;
+    height: 100%;
+}
+
+/** ---------------------------------------------------------------------------
+ * The featured area
+ */
+#outer-wrap-featured {}
+#inner-wrap-featured {
+    .wrap();
+    height: @magic-number * 5;
+    margin-bottom: @magic-number;
+}
+#featured {}
+
+#featured-first,
+#featured-middle,
+#featured-last {
+    .column(4);
+    background-color: @bgtest;
+    height: 100%;
+}
+
+/** ---------------------------------------------------------------------------
+ * The main content area
+ */
+#outer-wrap-main {}
+#inner-wrap-main {
+    .wrap();
+    margin-bottom: @magic-number;
+}
+#main {}
+
+#primary {
+    .column(8);
+    background-color: @bgtest;
+}
+#sidebar {
+    .column(4);
+    background-color: @bgtest;
+}
+
+/** ---------------------------------------------------------------------------
+ * The triptych area
+ */
+#outer-wrap-triptych {}
+#inner-wrap-triptych {
+    .wrap();
+    height: @magic-number * 5;
+    margin-bottom: @magic-number;
+}
+#triptych { height: inherit; }
+
+#triptych-first,
+#triptych-middle,
+#triptych-last {
+    .column(4);
+    background-color: @bgtest;
+    height: 100%;
+}
+
+/** ---------------------------------------------------------------------------
+ * The footer column area
+ */
+#outer-wrap-footer-column {
+    background-color: @bgtest;
+    border-top: 1px solid #bbb;
+}
+#inner-wrap-footer-column {
+    .wrap();
+    height: @magic-number * 5;
+    padding-bottom: @magic-number;
+}
+
+#footer-column-one,
+#footer-column-two,
+#footer-column-three,
+#footer-column-four {
+    .column(3);
+    font-size: 0.9em;
+    margin-top: 1em;
+    height: 100%;
+    background-color: lighten(@bgtest, 10%);
+}
+
+/** ---------------------------------------------------------------------------
+ * The footer area
+ */
+#outer-wrap-footer { background-color: @bgtest; }
+#inner-wrap-footer { .wrap(); }
+#footer { 
+    .column(12);
+    height: inherit;
+    font-size: 0.8em;
+    color: #666;
+    paddin-bottom: @magic-number;
+}
+
+/** ---------------------------------------------------------------------------
+ * Links
+ */
+@hover() { text-decoration: none; color: #f06508; }
+a {
+    color: #ce4c00;
+    &:link {}
+    &:visited {}
+    &:hover { @hover() }
+    &:focus { @hover() }
+    &:active {}
+}
+
+/** ---------------------------------------------------------------------------
+ * User feedback message wrappers
+ */
+div.info, div.notice, div.success, div.warning, div.error, div.alert {
+    border: 2px solid;
+    padding: 1em;
+}
+
+@infoDialog(@color) {
+    background-color: @color;
+    border-color: darken(desaturate(@color, 40%), 25%);
+}
+
+div.info { @infoDialog(#bbeeff); }
+div.notice { @infoDialog(#ffebaf); }
+div.success { @infoDialog(#d8ffcb); }
+div.error { @infoDialog(#ffb6b6); }
+
+
+/** ---------------------------------------------------------------------------
+ * Misc
+ */
+.smaller-text {
+    font-size: smaller;
+}
