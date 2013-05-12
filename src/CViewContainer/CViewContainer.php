@@ -110,6 +110,12 @@ class CViewContainer {
         }
     }
     
+    /**
+     * Add inline style.
+     * 
+     * @param string $value String to be added as inline style.
+     * @return $this.
+     */
     public function AddStyle($value) {
         if (isset($this->data['inline_style'])) {
             $this->data['inline_style'] .= $value;

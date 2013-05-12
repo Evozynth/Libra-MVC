@@ -1,20 +1,47 @@
-/**
+/** ---------------------------------------------------------------------------
  * Description: Grid theme for Libra based on less, lessphp and semantic.gs.
  */
 
 /** ---------------------------------------------------------------------------
+ * Reset. http://meyerweb.com/eric/tools/css/reset/ v2.0 | 20110126
+ *
+ */
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,
+a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,
+small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,
+table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,
+figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,
+time,mark,audio,video{margin:0;padding:0;border:0;font-size:100.01%;font:inherit;vertical-align:baseline;}
+body{line-height:1;}
+ol,ul{list-style: none;}
+blockquote,q{quotes:none;}
+blockquote:before,blockquote:after,q:before,q:after{content:'';content:none;}
+table{border-collapse:collapse;border-spacing:0;}
+
+/** ---------------------------------------------------------------------------
+ * HTML5 elements.
+ *
+ */
+article,aside,details,figcaption,figure,footer,header,hgroup,nav,section{display:block;}
+audio,canvas,video{display:inline-block;*display:inline;*zoom:1;}
+audio:not([controls]){display:none;}
+[hidden]{display:none;}
+
+/** ---------------------------------------------------------------------------
  * Semantic.gs
+ *
  */
 @import url(semantic.gs/stylesheets/less/grid.less);
 
+
 /** ---------------------------------------------------------------------------
- * 	Settings
+ * Settings
+ *
  */
 @bgcolor1: #eee;
 @bgcolor2: #fff;
 @bgtest: hsla(0, 0%, 90%, 0.5);
-@color: #333;
-@font: 1em Verdana, Arial, Helvetica, sans-serif;
+@color: #222;
 
 /* Wrap elements to site width in grid layout */
 .wrap() {
@@ -23,10 +50,89 @@
     .clearfix();
 }
 
+/** ---------------------------------------------------------------------------
+ * Font definitions.
+ *
+ */
+@font-family-cambria    = Cambria, Georgia, Times, 'Times New Roman', serif;
+@font-family-helvetica  = Frutiger, "Frutiger Linotype", Univers, Calibri, "Gill Sans", "Gill Sans MT", "Myriad Pro", Myriad, "DejaVu Sans Condensed", "Liberation Sans", "Nimbus Sans L", Tahoma, Geneva, "Helvetica Neue", Helvetica, Arial, sans-serif;
+@font-family-monospace  = "Consolas", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace;
+
 @magic-number: 22px;
 
 /** ---------------------------------------------------------------------------
+ * Structure
+ *
+ */
+html {
+    background-color: @bgcolor1;
+}
+
+body {
+    color: @color;
+    background-color: @bgcolor2;
+    font: 100.01%/1.375 @font-family-helvetica;
+}
+
+/* Headings */
+@hedings-general () {
+    font-weight: normal;
+    color: #111;
+    margin-bottom: @magic-number;
+    font-family: @font-family-cambria;
+}
+
+h1{@headings-general;font-size:2.375em;line-height:1.1579;border-bottom:1px solid #ccc;margin-bottom:@magic-number - 1px;}
+h2{@headings-general;font-size:1.875em;line-height:1.4667;}
+h3{@headings-general;font-size:1.375em;line-height:1;}
+h4{@headings-general;font-size:1.25em;line-height:1.1;}
+h5{@headings-general;font-size:1em;font-weight:bold;}
+h6{@headings-general;font-size:1em;font-weight:bold;margin-bottom:0;}
+h1 img,h2 img,h3 img,h4 img,h5 img,h6 img{margin:0;}
+
+@link-color: #600;
+/* Text elements */
+p { margin-bottom: 1.375; }
+a {
+    color: @link-color;
+    text-decoration: underline;
+    &:focus, &:hover {
+        color: lighten(@link-color, 10%);
+        text-decoration: none;
+    }
+}
+blockqoute { margin-left: 1em; margin-bottom: 1.375em; }
+strong, dfn { font-weight: bold; }
+em, dfn { font-style: italic; }
+pre { margin-bottom: 1.375em; white-space: pre }
+pre, code, tt, .code { font: 1em/1.375 @font-family-monospace; }
+
+/* Lists */
+li ul, li ol { margin: 0; }
+ul, ol { margin: 0.6875em 1.5em 1.375em 0; padding-left: 1.5em; }
+ul { list-style-type: disc; }
+ol { list-style-type: decimal; }
+dl { margin: 0 0 1.1375em 0; }
+dl dt { font-weight: bold; }
+dd { margin-left: 1.5em; }
+
+/* Tables. Because of the need for padding on TH and TD, the vertical rythm
+   on table cells has to be 33px, instead of the standard 22px or 44px
+   of other elements. */
+table { margin-bottom: 1.375em; width: 100%; }
+caption { text-align: left; font-style:italic; }
+thead { border-bottom: 2px solid #222; }
+th { vertical-align:bottom; font-weight:bold; text-align:left; }
+th, td { padding:5px 10px 5px 5px; }
+tbody tr:nth-child(even) td, tbody tr.even td {}
+tbody tr { border-bottom:1px solid #eee;
+         &:hover{color:#000;}
+}
+tfoot { font-style:italic; }
+
+/** ---------------------------------------------------------------------------
  * Forms
+ *
  */
 .content-edit textarea { width: 35em; height: 16em; }
 .content-edit input[type=text] { width: 20em; }
@@ -45,28 +151,9 @@ label {
 }
 
 /** ---------------------------------------------------------------------------
- * Structure
- */
-html {
-    background-color: @bgcolor1;
-}
-
-body {
-    margin: 0;
-    padding: 0;
-    color: @color;
-    background-color: @bgcolor2;
-    font: @font;
-}
-
-/** ---------------------------------------------------------------------------
  * The header area
+ *
  */
-@tablecell() {
-    display: table-cell;
-    verical-align: middle;
-    text-align: center;
-}
 
 #outer-wrap-header {
     height: @magic-number * 4;
@@ -78,6 +165,7 @@ body {
 
 /** ---------------------------------------------------------------------------
  * Login menu
+ *
  */
 #login-menu {
     float: right;
@@ -95,6 +183,7 @@ body {
 
 /** ---------------------------------------------------------------------------
  * The flash area
+ *
  */
 #outer-wrap-flash {}
 #inner-wrap-flash {
@@ -109,6 +198,7 @@ body {
 
 /** ---------------------------------------------------------------------------
  * The featured area
+ *
  */
 #outer-wrap-featured {}
 #inner-wrap-featured {
@@ -127,6 +217,7 @@ body {
 
 /** ---------------------------------------------------------------------------
  * The main content area
+ *
  */
 #outer-wrap-main {}
 #inner-wrap-main {
@@ -144,6 +235,7 @@ body {
 
 /** ---------------------------------------------------------------------------
  * The triptych area
+ *
  */
 #outer-wrap-triptych {}
 #inner-wrap-triptych {
@@ -162,6 +254,7 @@ body {
 
 /** ---------------------------------------------------------------------------
  * The footer column area
+ *
  */
 #outer-wrap-footer-column {
     border-top: 1px solid #bbb;
@@ -184,6 +277,7 @@ body {
 
 /** ---------------------------------------------------------------------------
  * The footer area
+ *
  */
 #outer-wrap-footer { background-color: @bgcolor1; }
 #inner-wrap-footer { .wrap(); }
@@ -197,8 +291,9 @@ body {
 
 /** ---------------------------------------------------------------------------
  * Links
+ *
  */
-@hover() { text-decoration: none; color: #f06508; }
+/*@hover() { text-decoration: none; color: #f06508; }
 a {
     color: #ce4c00;
     &:link {}
@@ -206,10 +301,11 @@ a {
     &:hover { @hover() }
     &:focus { @hover() }
     &:active {}
-}
+}*/
 
 /** ---------------------------------------------------------------------------
  * User feedback message wrappers
+ *
  */
 div.info, div.notice, div.success, div.warning, div.error, div.alert {
     border: 2px solid;
@@ -229,6 +325,7 @@ div.error { @infoDialog(#ffb6b6); }
 
 /** ---------------------------------------------------------------------------
  * Misc
+ *
  */
 .smaller-text {
     font-size: smaller;

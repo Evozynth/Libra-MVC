@@ -59,4 +59,9 @@ class CCTheme extends CObject implements IController {
                         ->AddStyle('#'.$val.'{background-color:hsla(0, 0%, 90%, 0.5);}');
         }
     }
+    
+    public function H1H6() {
+        $this->views->SetTitle('Theme testing headers and paragraphs')
+                    ->AddInclude(__DIR__.'/h1h6.tpl.php', array(), 'primary');
+    }
 }
