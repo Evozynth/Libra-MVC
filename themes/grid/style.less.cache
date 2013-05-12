@@ -1,4 +1,4 @@
-a:4:{s:4:"root";s:10:"style.less";s:8:"compiled";s:6821:"html,
+a:4:{s:4:"root";s:10:"style.less";s:8:"compiled";s:7443:"html,
 body,
 div,
 span,
@@ -275,12 +275,12 @@ tbody tr:hover {
 tfoot {
   font-style: italic;
 }
-.content-edit textarea {
-  width: 35em;
-  height: 16em;
+input,
+textarea {
+  font: inherit;
 }
-.content-edit input[type=text] {
-  width: 20em;
+input[readonly] {
+  color: #666;
 }
 label {
   font-size: small;
@@ -291,6 +291,16 @@ label {
 .validation-message {
   color: red;
   font-size: smaller;
+}
+.form-action-link {
+  font-size: smaller;
+}
+.content-edit input[type=text] {
+  width: 20em;
+}
+.content-edit textarea {
+  width: 35em;
+  height: 16em;
 }
 #outer-wrap-header {
   height: 88px;
@@ -330,6 +340,33 @@ label {
 }
 #login-menu a:hover {
   text-decoration: underline;
+}
+#banner {
+  display: table;
+  margin-bottom: 11px;
+}
+#banner #site-logo {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+}
+#banner #site-title {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  font-size: 2.5em;
+  padding-left: 0.2em;
+  text-shadow: #ccc 2px -2px 2px;
+}
+#banner #site-title a {
+  text-decoration: none;
+}
+#banner #site-slogan {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  font-size: 1.5em;
+  padding-left: 10px;
 }
 #inner-wrap-flash {
   width: 960px;
@@ -482,7 +519,7 @@ label {
   width: 940px;
   margin: 0 10px;
   height: inherit;
-  font-size: 0.8em;
+  font-size: 1em;
   color: #666;
   paddin-bottom: 22px;
 }
@@ -514,4 +551,4 @@ div.error {
 .smaller-text {
   font-size: smaller;
 }
-";s:5:"files";a:2:{s:51:"C:\wamp\www\phpmvc\Libra-MVC\themes\grid\style.less";i:1368373609;s:79:"C:\wamp\www\phpmvc\Libra-MVC\themes\grid\semantic.gs\stylesheets\less\grid.less";i:1331866480;}s:7:"updated";i:1368373613;}
+";s:5:"files";a:2:{s:51:"C:\wamp\www\phpmvc\Libra-MVC\themes\grid\style.less";i:1368380640;s:79:"C:\wamp\www\phpmvc\Libra-MVC\themes\grid\semantic.gs\stylesheets\less\grid.less";i:1331866480;}s:7:"updated";i:1368380641;}

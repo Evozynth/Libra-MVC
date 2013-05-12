@@ -134,27 +134,23 @@ tfoot { font-style:italic; }
  * Forms
  *
  */
-.content-edit textarea { width: 35em; height: 16em; }
-.content-edit input[type=text] { width: 20em; }
+input, textarea { font: inherit; }
+input[readonly] { color: #666; }
+label { font-size: small; }
+.validation-failed { border: 2px solid red; }
+.validation-message { color: red; font-size: smaller; }
+.form-action-link { font-size: smaller; }
 
-label {
-    font-size: small;
-}
-
-.validation-failed {
-    border: 2px solid red;
-}
-
-.validation-message {
-    color: red;
-    font-size: smaller;
+.content-edit {
+    input[type=text] { width: 20em; }
+    textarea { width: 35em; height: 16em; }
 }
 
 /** ---------------------------------------------------------------------------
  * The header area
  *
  */
-
+@tablecell() { display:table-cell; vertical-align:middle; text-align:center; }
 #outer-wrap-header {
     height: @magic-number * 4;
     margin-top: @magic-number / 2;
@@ -178,6 +174,28 @@ label {
     a {
         text-decoration: none;
         &:hover { text-decoration: underline; }
+    }
+}
+
+/** ---------------------------------------------------------------------------
+ * Banner
+ *
+ */
+#banner {
+    display: table; 
+    margin-bottom: @magic-number / 2;
+    #site-logo { @tablecell(); }
+    #site-title {
+        @tablecell();
+        font-size: 2.5em;
+        padding-left: 0.2em;
+        text-shadow: #ccc 2px -2px 2px;
+        a { text-decoration: none; }
+    }
+    #site-slogan {
+        @tablecell();
+        font-size: 1.5em;
+        padding-left: 10px;
     }
 }
 
@@ -284,7 +302,7 @@ label {
 #footer { 
     .column(12);
     height: inherit;
-    font-size: 0.8em;
+    font-size: 1em;
     color: #666;
     paddin-bottom: @magic-number;
 }
