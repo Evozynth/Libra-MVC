@@ -1,4 +1,4 @@
-a:4:{s:4:"root";s:10:"style.less";s:8:"compiled";s:4564:"body {
+a:4:{s:4:"root";s:10:"style.less";s:8:"compiled";s:4168:"body {
   width: 100%;
   *zoom: 1;
 }
@@ -36,9 +36,6 @@ body {
   color: #333;
   background-color: #fff;
   font: 1em Verdana, Arial, Helvetica, sans-serif;
-}
-body:hover {
-  background: #fff url(grid_12_60_20.png) repeat-y center top;
 }
 #outer-wrap-header {
   height: 88px;
@@ -99,7 +96,6 @@ body:hover {
   float: left;
   width: 940px;
   margin: 0 10px;
-  background-color: rgba(230,230,230,0.5);
   height: 100%;
 }
 #inner-wrap-featured {
@@ -124,7 +120,6 @@ body:hover {
   float: left;
   width: 300px;
   margin: 0 10px;
-  background-color: rgba(230,230,230,0.5);
   height: 100%;
 }
 #inner-wrap-main {
@@ -146,14 +141,12 @@ body:hover {
   float: left;
   width: 620px;
   margin: 0 10px;
-  background-color: rgba(230,230,230,0.5);
 }
 #sidebar {
   display: inline;
   float: left;
   width: 300px;
   margin: 0 10px;
-  background-color: rgba(230,230,230,0.5);
 }
 #inner-wrap-triptych {
   width: 960px;
@@ -180,11 +173,9 @@ body:hover {
   float: left;
   width: 300px;
   margin: 0 10px;
-  background-color: rgba(230,230,230,0.5);
   height: 100%;
 }
 #outer-wrap-footer-column {
-  background-color: rgba(230,230,230,0.5);
   border-top: 1px solid #bbb;
 }
 #inner-wrap-footer-column {
@@ -213,10 +204,9 @@ body:hover {
   font-size: 0.9em;
   margin-top: 1em;
   height: 100%;
-  background-color: rgba(255,255,255,0.5);
 }
 #outer-wrap-footer {
-  background-color: rgba(230,230,230,0.5);
+  background-color: #eee;
 }
 #inner-wrap-footer {
   width: 960px;
@@ -280,4 +270,4 @@ div.error {
 .smaller-text {
   font-size: smaller;
 }
-";s:5:"files";a:2:{s:51:"C:\wamp\www\phpmvc\Libra-MVC\themes\grid\style.less";i:1368209368;s:79:"C:\wamp\www\phpmvc\Libra-MVC\themes\grid\semantic.gs\stylesheets\less\grid.less";i:1331866480;}s:7:"updated";i:1368209371;}
+";s:5:"files";a:2:{s:51:"C:\wamp\www\phpmvc\Libra-MVC\themes\grid\style.less";i:1368295952;s:79:"C:\wamp\www\phpmvc\Libra-MVC\themes\grid\semantic.gs\stylesheets\less\grid.less";i:1331866480;}s:7:"updated";i:1368295956;}

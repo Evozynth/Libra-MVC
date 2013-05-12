@@ -57,9 +57,6 @@ body {
     color: @color;
     background-color: @bgcolor2;
     font: @font;
-    &:hover {
-        background: #fff url(grid_12_60_20.png) repeat-y center top;
-    }
 }
 
 /** ---------------------------------------------------------------------------
@@ -107,7 +104,6 @@ body {
 }
 #flash {
     .column(12);
-    background-color: @bgtest;
     height: 100%;
 }
 
@@ -126,7 +122,6 @@ body {
 #featured-middle,
 #featured-last {
     .column(4);
-    background-color: @bgtest;
     height: 100%;
 }
 
@@ -142,11 +137,9 @@ body {
 
 #primary {
     .column(8);
-    background-color: @bgtest;
 }
 #sidebar {
     .column(4);
-    background-color: @bgtest;
 }
 
 /** ---------------------------------------------------------------------------
@@ -164,7 +157,6 @@ body {
 #triptych-middle,
 #triptych-last {
     .column(4);
-    background-color: @bgtest;
     height: 100%;
 }
 
@@ -172,7 +164,6 @@ body {
  * The footer column area
  */
 #outer-wrap-footer-column {
-    background-color: @bgtest;
     border-top: 1px solid #bbb;
 }
 #inner-wrap-footer-column {
@@ -189,13 +180,12 @@ body {
     font-size: 0.9em;
     margin-top: 1em;
     height: 100%;
-    background-color: lighten(@bgtest, 10%);
 }
 
 /** ---------------------------------------------------------------------------
  * The footer area
  */
-#outer-wrap-footer { background-color: @bgtest; }
+#outer-wrap-footer { background-color: @bgcolor1; }
 #inner-wrap-footer { .wrap(); }
 #footer { 
     .column(12);

@@ -58,15 +58,15 @@ EOD;
      * Create a method that shows the menu, same for all methods
      */
     private function Menu() {
-           $menu = array('developer', 'developer/index', 'developer/links', 'developer/display-object');
+        $menu = array('developer', 'developer/index', 'developer/links', 'developer/display-object');
+
+        $html = null;
+        foreach ($menu as $val) {
+            $html .= '<li><a href="' . $this->request->CreateUrl($val) . '">' . $val . "</a></li>\n";
+        }
            
-           $html = null;
-           foreach ($menu as $val) {
-               $html .= '<li><a href="' . $this->request->CreateUrl($val) . '">' . $val . "</a></li>\n";
-           }
-           
-           $this->data['title'] = 'The Developer Controller';
-           $this->data['main'] = <<<EOD
+        $this->data['title'] = 'The Developer Controller';
+        $this->data['main'] = <<<EOD
 <h1>The Developer Controller</h1>
 <p>This is what you can do now: </p>
 <ul>

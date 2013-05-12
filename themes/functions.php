@@ -54,12 +54,22 @@ function base_url($url) {
     return CLibra::Instance()->request->base_url . trim($url, '/');
 }
 
+/**
+ * Check if region has views. Accepts variable amount of arguments as regions.
+ * 
+ * @param type $region
+ */
+function region_has_content($region = 'default' /*...*/) {
+    return CLibra::Instance()->views->RegionHasView(func_get_args());
+}
 
 /**
  * Render all views
+ * 
+ * @param string $region The region to draw the content in.
  */
-function render_views() {
-    return CLibra::Instance()->views->Render();
+function render_views($region = 'default') {
+    return CLibra::Instance()->views->Render($region);
 }
 
 /**
