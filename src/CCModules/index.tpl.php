@@ -5,6 +5,16 @@
 Libra modules. Libra is made up of modules. Each module has its own subdirectory in the 
 <code>src</code>-directory.</p>
 
+<h2>Manage Libra modules</h2>
+<p>A module can implement the interface <code>IModule</code>
+which makes it a manageable module. Libra provides an administrating interface for these
+modules. You can perform the following actions through this interface:</p>
+
+<ul>
+    <li><a href="<?=create_url('modules/install')?>">install</a></li>
+</ul>
+    
+
 <h2>Enabled controllers</h2>
 <p>The controllers make up the public API of this website. Here is a list of the enabled
 controllers and their methods. You can enable and disable controllers in

@@ -1,4 +1,4 @@
-a:4:{s:4:"root";s:10:"style.less";s:8:"compiled";s:8298:"html,
+a:4:{s:4:"root";s:10:"style.less";s:8:"compiled";s:8310:"html,
 body,
 div,
 span,
@@ -213,7 +213,7 @@ h6 img {
   margin: 0;
 }
 p {
-  margin-bottom: 1.375;
+  margin-bottom: 1.375em;
 }
 a {
   color: #600;
@@ -224,7 +224,7 @@ a:hover {
   color: #990000;
   text-decoration: none;
 }
-blockqoute {
+blockquote {
   margin-left: 1em;
   margin-bottom: 1.375em;
 }
@@ -496,9 +496,6 @@ label {
   margin: 0 10px;
   height: 100%;
 }
-#outer-wrap-footer-column {
-  border-top: 1px solid #bbb;
-}
 #inner-wrap-footer-column {
   width: 960px;
   margin: 0 auto;
@@ -528,11 +525,14 @@ label {
 }
 #outer-wrap-footer {
   background-color: #eee;
+  border-top: 1px solid #bbb;
 }
 #inner-wrap-footer {
   width: 960px;
   margin: 0 auto;
   *zoom: 1;
+  padding-top: 22px;
+  padding-bottom: 22px;
 }
 #inner-wrap-footer:before,
 #inner-wrap-footer:after {
@@ -550,7 +550,7 @@ label {
   height: inherit;
   font-size: 1em;
   color: #666;
-  paddin-bottom: 22px;
+  margin: 0 10px;
 }
 div.info,
 div.notice,
@@ -580,4 +580,4 @@ div.error {
 .smaller-text {
   font-size: smaller;
 }
-";s:5:"files";a:2:{s:51:"C:\wamp\www\phpmvc\Libra-MVC\themes\grid\style.less";i:1368439491;s:79:"C:\wamp\www\phpmvc\Libra-MVC\themes\grid\semantic.gs\stylesheets\less\grid.less";i:1331866480;}s:7:"updated";i:1368439495;}
+";s:5:"files";a:2:{s:51:"C:\wamp\www\phpmvc\Libra-MVC\themes\grid\style.less";i:1368456140;s:79:"C:\wamp\www\phpmvc\Libra-MVC\themes\grid\semantic.gs\stylesheets\less\grid.less";i:1331866480;}s:7:"updated";i:1368456309;}
