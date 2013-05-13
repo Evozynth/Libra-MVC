@@ -207,9 +207,12 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess {
      * @return boolean true if success else false.
      */
     public function Save() {
-        $this->db->ExecuteQuery(self::SQL('update profile'), array($this['name'], $this['email'], $this['id']));
-        $this->session->SetAuthenticatedUser($this->profile);
-        return $this->db->RowCount() === 1;
+        if ($this->IsAuthenticated()) {
+            $this->db->ExecuteQuery(self::SQL('update profile'), array($this['name'], $this['email'], $this['id']));
+            $this->session->SetAuthenticatedUser($this->profile);
+            return $this->db->RowCount() === 1;
+        }
+        return false;
     }
     
     /**

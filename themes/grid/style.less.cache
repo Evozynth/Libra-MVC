@@ -1,4 +1,4 @@
-a:4:{s:4:"root";s:10:"style.less";s:8:"compiled";s:7443:"html,
+a:4:{s:4:"root";s:10:"style.less";s:8:"compiled";s:8298:"html,
 body,
 div,
 span,
@@ -154,28 +154,52 @@ body {
   font: 100.01%/1.375 Frutiger, "Frutiger Linotype", Univers, Calibri, "Gill Sans", "Gill Sans MT", "Myriad Pro", Myriad, "DejaVu Sans Condensed", "Liberation Sans", "Nimbus Sans L", Tahoma, Geneva, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 h1 {
+  font-weight: normal;
+  color: #111;
+  margin-bottom: 22px;
+  font-family: Cambria, Georgia, Times, 'Times New Roman', serif;
   font-size: 2.375em;
   line-height: 1.1579;
   border-bottom: 1px solid #ccc;
   margin-bottom: 21px;
 }
 h2 {
+  font-weight: normal;
+  color: #111;
+  margin-bottom: 22px;
+  font-family: Cambria, Georgia, Times, 'Times New Roman', serif;
   font-size: 1.875em;
   line-height: 1.4667;
 }
 h3 {
+  font-weight: normal;
+  color: #111;
+  margin-bottom: 22px;
+  font-family: Cambria, Georgia, Times, 'Times New Roman', serif;
   font-size: 1.375em;
   line-height: 1;
 }
 h4 {
+  font-weight: normal;
+  color: #111;
+  margin-bottom: 22px;
+  font-family: Cambria, Georgia, Times, 'Times New Roman', serif;
   font-size: 1.25em;
   line-height: 1.1;
 }
 h5 {
+  font-weight: normal;
+  color: #111;
+  margin-bottom: 22px;
+  font-family: Cambria, Georgia, Times, 'Times New Roman', serif;
   font-size: 1em;
   font-weight: bold;
 }
 h6 {
+  font-weight: normal;
+  color: #111;
+  margin-bottom: 22px;
+  font-family: Cambria, Georgia, Times, 'Times New Roman', serif;
   font-size: 1em;
   font-weight: bold;
   margin-bottom: 0;
@@ -440,6 +464,11 @@ label {
   width: 300px;
   margin: 0 10px;
 }
+#sidebar .box {
+  border-top: 4px double #ccc;
+  margin-bottom: 51px;
+  padding-top: 11px;
+}
 #inner-wrap-triptych {
   width: 960px;
   margin: 0 auto;
@@ -551,4 +580,4 @@ div.error {
 .smaller-text {
   font-size: smaller;
 }
-";s:5:"files";a:2:{s:51:"C:\wamp\www\phpmvc\Libra-MVC\themes\grid\style.less";i:1368380640;s:79:"C:\wamp\www\phpmvc\Libra-MVC\themes\grid\semantic.gs\stylesheets\less\grid.less";i:1331866480;}s:7:"updated";i:1368380641;}
+";s:5:"files";a:2:{s:51:"C:\wamp\www\phpmvc\Libra-MVC\themes\grid\style.less";i:1368439491;s:79:"C:\wamp\www\phpmvc\Libra-MVC\themes\grid\semantic.gs\stylesheets\less\grid.less";i:1331866480;}s:7:"updated";i:1368439495;}

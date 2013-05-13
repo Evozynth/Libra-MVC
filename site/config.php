@@ -76,6 +76,7 @@ $li->config['controllers'] = array(
     'content'      => array('enabled' => true, 'class' => 'CCContent'),
     'blog'         => array('enabled' => true, 'class' => 'CCBlog'),
     'page'         => array('enabled' => true, 'class' => 'CCPage'),
+    'modules'      => array('enabled' => true, 'class' => 'CCModules'),
 );
 
 /**

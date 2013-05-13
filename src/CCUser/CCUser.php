@@ -19,7 +19,7 @@ class CCuser extends CObject implements IController {
     public function Index() {
         $this->views->SetTitle('User Controller')
                     ->AddInclude(__DIR__ . '/index.tpl.php', array(
-                        'is_authenticated'  => $this->user['IsAuthenticated'],
+                        'is_authenticated'  => $this->user['isAuthenticated'],
                         'user'              => $this->user,
                     ));
     }
@@ -28,7 +28,7 @@ class CCuser extends CObject implements IController {
      * View and edit user profile.
      */
     public function Profile() {
-        $form = new CFormUserProfile($this, $this->user);
+        $form = new CFormUserProfile($this, $this->user);        
         if ($form->Check() === false) {
             $this->AddMessage('notice', 'Some fields did not validate and the form could not be processed.');
             $this->RedirectToController('profile');
