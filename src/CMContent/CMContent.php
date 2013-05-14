@@ -54,12 +54,13 @@ class CMContent extends CObject implements IHasSQL, ArrayAccess, IModule {
                                             deleted DATETIME default NULL,
                                             FOREIGN KEY (idUser) REFERENCES User(id)
                                         );",
-            'insert content'        => "INSERT INTO Content (key, type, title, data, filter, idUser) VALUES (?,?,?,?,?,?);",
-            'select * by id'        => "SELECT c.*, u.acronym AS owner FROM Content AS c INNER JOIN User AS u ON c.idUser=u.id WHERE c.id=?;",
-            'select * by key'       => "SELECT c.*, u.acronym AS owner FROM Content AS c INNER JOIN User AS u ON c.idUser=u.id WHERE c.key=?;",
-            'select * by type'      => "SELECT c.*, u.acronym AS owner FROM Content AS c INNER JOIN User AS u ON c.idUser=u.id WHERE c.type=? ORDER BY {$order_by} {$order_order};",
-            'select *'              => "SELECT c.*, u.acronym AS owner FROM Content AS c INNER JOIN User AS u ON c.idUser=u.id;",
-            'update content'        => "UPDATE Content SET key=?, type=?, title=?, data=?, filter=?, updated=datetime('now') WHERE id=?;",
+            'insert content'            => "INSERT INTO Content (key, type, title, data, filter, idUser) VALUES (?,?,?,?,?,?);",
+            'select * by id'            => "SELECT c.*, u.acronym AS owner FROM Content AS c INNER JOIN User AS u ON c.idUser=u.id WHERE c.id=? AND deleted IS NULL;",
+            'select * by key'           => "SELECT c.*, u.acronym AS owner FROM Content AS c INNER JOIN User AS u ON c.idUser=u.id WHERE c.key=? AND deleted IS NULL;",
+            'select * by type'          => "SELECT c.*, u.acronym AS owner FROM Content AS c INNER JOIN User AS u ON c.idUser=u.id WHERE c.type=? AND deleted IS NULL ORDER BY {$order_by} {$order_order};",
+            'select *'                  => "SELECT c.*, u.acronym AS owner FROM Content AS c INNER JOIN User AS u ON c.idUser=u.id WHERE deleted IS NULL;",
+            'update content'            => "UPDATE Content SET key=?, type=?, title=?, data=?, filter=?, updated=datetime('now') WHERE id=?;",
+            'update content as deleted' => "UPDATE Content SET deleted=datetime('now') WHERE id=?;",
         );
         if (!isset($queries[$key])) {
             throw new Exception("No such SQL query, key '$key' was not found.");
@@ -124,11 +125,24 @@ class CMContent extends CObject implements IHasSQL, ArrayAccess, IModule {
         return $rowcount === 1;
     }
     
+    public function Delete() {
+        if ($this['id']) {
+            $this->db->ExecuteQuery(self::SQL('update content as deleted'), array($this['id']));
+        }
+        $rowcount = $this->db->RowCount();
+        if ($rowcount) {
+            $this->AddMessage('success', "Successfully set content '" . htmlent($this['key']) . "' as deleted.");
+        } else {
+            $this->AddMessage('error', "Failed to set content '". htmlent($this['key']) ."' as deleted.");
+        }
+        return $rowcount ===1;
+    }
+    
     /**
      * Load content by id.
      * 
      * @param int $id The id of the content.
-     * @return boolean true if success else false.
+     * @return boolean True if success else false.
      */
     public function LoadById($id) {
         $res = $this->db->ExecuteSelectQueryAndFetchAll(self::SQL('select * by id'), array($id));

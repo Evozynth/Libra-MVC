@@ -99,11 +99,15 @@ class CViewContainer {
         foreach ($this->views[$region] as $view) {
             switch ($view['type']) {
                 case 'include':
-                    extract($view['variables']);
+                    if (isset($view['variables'])) {
+                        extract($view['variables']);
+                    }
                     include($view['file']);
                     break;
                 case 'string':
-                    extract($view['variables']);
+                    if (isset($view['variables'])) {
+                        extract($view['variables']);
+                    }
                     echo $view['string'];
                     break;
             }

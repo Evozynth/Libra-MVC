@@ -1,4 +1,4 @@
-a:4:{s:4:"root";s:10:"style.less";s:8:"compiled";s:8310:"html,
+a:4:{s:4:"root";s:10:"style.less";s:8:"compiled";s:8702:"html,
 body,
 div,
 span,
@@ -327,8 +327,7 @@ label {
   height: 16em;
 }
 #outer-wrap-header {
-  height: 88px;
-  margin-top: 11px;
+  padding-top: 11px;
   margin-bottom: 11px;
 }
 #inner-wrap-header {
@@ -391,6 +390,29 @@ label {
   text-align: center;
   font-size: 1.5em;
   padding-left: 10px;
+}
+#navbar ul.menu {
+  list-style-type: none;
+  padding: 2px 8px;
+  margin: 0;
+}
+#navbar ul.menu li {
+  padding: 0;
+  margin: 0;
+  display: inline;
+}
+#navbar ul.menu li a {
+  padding: 6px 8px;
+  text-decoration: none;
+  border: 2px solid transparent;
+}
+#navbar ul.menu li a:hover {
+  background: #ddd;
+  border: 2px solid #999;
+}
+#navbar ul.menu li a.selected {
+  background: #ccc;
+  border: 2px solid #999;
 }
 #inner-wrap-flash {
   width: 960px;
@@ -580,4 +602,4 @@ div.error {
 .smaller-text {
   font-size: smaller;
 }
-";s:5:"files";a:2:{s:51:"C:\wamp\www\phpmvc\Libra-MVC\themes\grid\style.less";i:1368456140;s:79:"C:\wamp\www\phpmvc\Libra-MVC\themes\grid\semantic.gs\stylesheets\less\grid.less";i:1331866480;}s:7:"updated";i:1368456309;}
+";s:5:"files";a:2:{s:51:"C:\wamp\www\phpmvc\Libra-MVC\themes\grid\style.less";i:1368544466;s:79:"C:\wamp\www\phpmvc\Libra-MVC\themes\grid\semantic.gs\stylesheets\less\grid.less";i:1331866480;}s:7:"updated";i:1368544469;}

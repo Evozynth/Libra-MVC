@@ -152,8 +152,8 @@ label { font-size: small; }
  */
 @tablecell() { display:table-cell; vertical-align:middle; text-align:center; }
 #outer-wrap-header {
-    height: @magic-number * 4;
-    margin-top: @magic-number / 2;
+
+    padding-top: @magic-number / 2;
     margin-bottom: @magic-number / 2;
 }
 #inner-wrap-header { .wrap(); }
@@ -196,6 +196,38 @@ label { font-size: small; }
         @tablecell();
         font-size: 1.5em;
         padding-left: 10px;
+    }
+}
+
+/** ---------------------------------------------------------------------------
+ * Navbar
+ *
+ */
+#navbar {
+    ul.menu {
+        list-style-type: none;
+        padding: 2px 8px;
+        margin: 0;
+        
+        li {
+            padding: 0;
+            margin: 0;
+            display: inline;
+            
+            a {
+                padding: 6px 8px;
+                text-decoration: none;
+                border: 2px solid transparent;
+                &:hover {
+                    background: #ddd;
+                    border: 2px solid #999;
+                }
+                &.selected {
+                    background: #ccc;
+                    border: 2px solid #999;
+                }
+            }
+        }
     }
 }
 

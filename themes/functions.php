@@ -130,9 +130,18 @@ function create_url($urlOrController = null, $method = null, $arguments = null) 
     return CLibra::Instance()->request->CreateUrl($urlOrController, $method, $arguments);
 }
 
+/**
+ * Prepends the theme_url, which is the url to the current theme directory.
+ * 
+ * @param string $url The url-part to prepend
+ * @return string The absolute url.
+ */
 function theme_url($url) {
-    $li = CLibra::Instance();
-    return "{$li->request->base_url}themes/{$li->config['theme']['name']}/{$url}";
+    return create_url(CLibra::Instance()->themeUrl . "/{$url}");
+}
+
+function theme_parent_url($url) {
+    return create_url(CLibra::Instance()->themeParentUrl . "/{$url}"); 
 }
 
 /**
