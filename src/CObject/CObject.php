@@ -35,35 +35,35 @@ class CObject {
     }
     
     /**
-     * Wrapper for same method in CLibra. See there for socumentation.
+     * Wrapper for same method in CLibra. See there for documentation.
      */
     protected function RedirectTo($urlOrController = null, $method = null, $arguments = null) {
         $this->li->RedirectTo($urlOrController, $method, $arguments);
     }
     
     /**
-     * Wrapper for same method in CLibra. See there for socumentation.
+     * Wrapper for same method in CLibra. See there for documentation.
      */
     protected function RedirectToController($method = null, $arguments = null) {
         $this->li->RedirectToController($method, $arguments);
     }
     
     /**
-     * Wrapper for same method in CLibra. See there for socumentation.
+     * Wrapper for same method in CLibra. See there for documentation.
      */
     protected function RedirectToControllerMethod($controller = null, $method = null, $arguments = null) {
         $this->li->RedirectToControllerMethod($controller, $method, $arguments);
     }
     
     /**
-     * Wrapper for same method in CLibra. See there for socumentation.
+     * Wrapper for same method in CLibra. See there for documentation.
      */
     protected function AddMessage($type, $message, $alternative = null) {
         $this->li->AddMessage($type, $message, $alternative);
     }
     
     /**
-     * Wrapper for same method in CLibra. See there for socumentation.
+     * Wrapper for same method in CLibra. See there for documentation.
      */
     protected function CreateUrl($urlOrController = null, $method = null, $arguments = null) {
         return $this->li->CreateUrl($urlOrController, $method, $arguments);
