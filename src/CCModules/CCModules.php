@@ -19,7 +19,7 @@ class CCModules extends CObject implements IController {
     public function Index() {
         $modules = new CMModules();
         $controllers = $modules->AvailableControllers();
-        $allModules = $modules->ReadAndAnalys();
+        $allModules = $modules->ReadAndAnalyse();
         $this->views->SetTitle('Manage Modules')
                     ->Addinclude(__DIR__.'/index.tpl.php', array('controllers' => $controllers), 'primary')
                     ->AddInclude(__DIR__.'/sidebar.tpl.php', array('modules' => $allModules), 'sidebar');

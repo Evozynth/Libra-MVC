@@ -146,7 +146,7 @@ class CMModules extends CObject {
         );
         $installed = array();
         foreach ($allModules as $module) {
-            if ($module['isManagable']) {
+            if ($module['isManageable']) {
                 $classname = $module['name'];
                 $rc = new ReflectionClass($classname);
                 $obj = $rc->newInstance();
