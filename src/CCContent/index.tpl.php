@@ -17,7 +17,6 @@
 
 <h2>Actions</h2>
 <ul>
-    <li><a href="<?=create_url('content/init')?>">Initialize database, create tables and sample content.</a></li>
     <li><a href="<?=create_url('content/create')?>">Create new content</a></li>
     <li><a href="<?=create_url('blog')?>">View as blog</a></li>
 </ul>

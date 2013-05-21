@@ -146,28 +146,28 @@ body:after {
   clear: both;
 }
 html {
-  background-color: #eee;
+  background-color: #426880;
 }
 body {
   color: #222;
   background-color: #fff;
-  font: 100.01%/1.375 Frutiger, "Frutiger Linotype", Univers, Calibri, "Gill Sans", "Gill Sans MT", "Myriad Pro", Myriad, "DejaVu Sans Condensed", "Liberation Sans", "Nimbus Sans L", Tahoma, Geneva, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font: 100.01%/1.375 sans-serif;
 }
 h1 {
   font-weight: normal;
   color: #111;
   margin-bottom: 22px;
-  font-family: Cambria, Georgia, Times, 'Times New Roman', serif;
+  font-family: Georgia, serif;
   font-size: 2.375em;
   line-height: 1.1579;
   border-bottom: 1px solid #ccc;
-  margin-bottom: 21px;
+  margin-bottom: 19px;
 }
 h2 {
   font-weight: normal;
   color: #111;
   margin-bottom: 22px;
-  font-family: Cambria, Georgia, Times, 'Times New Roman', serif;
+  font-family: Georgia, serif;
   font-size: 1.875em;
   line-height: 1.4667;
 }
@@ -175,7 +175,7 @@ h3 {
   font-weight: normal;
   color: #111;
   margin-bottom: 22px;
-  font-family: Cambria, Georgia, Times, 'Times New Roman', serif;
+  font-family: Georgia, serif;
   font-size: 1.375em;
   line-height: 1;
 }
@@ -183,7 +183,7 @@ h4 {
   font-weight: normal;
   color: #111;
   margin-bottom: 22px;
-  font-family: Cambria, Georgia, Times, 'Times New Roman', serif;
+  font-family: Georgia, serif;
   font-size: 1.25em;
   line-height: 1.1;
 }
@@ -191,7 +191,7 @@ h5 {
   font-weight: normal;
   color: #111;
   margin-bottom: 22px;
-  font-family: Cambria, Georgia, Times, 'Times New Roman', serif;
+  font-family: Georgia, serif;
   font-size: 1em;
   font-weight: bold;
 }
@@ -199,7 +199,7 @@ h6 {
   font-weight: normal;
   color: #111;
   margin-bottom: 22px;
-  font-family: Cambria, Georgia, Times, 'Times New Roman', serif;
+  font-family: Georgia, serif;
   font-size: 1em;
   font-weight: bold;
   margin-bottom: 0;
@@ -216,12 +216,12 @@ p {
   margin-bottom: 1.375em;
 }
 a {
-  color: #600;
+  color: #426880;
   text-decoration: underline;
 }
 a:focus,
 a:hover {
-  color: #990000;
+  color: #729cb6;
   text-decoration: none;
 }
 blockquote {
@@ -244,7 +244,8 @@ pre,
 code,
 tt,
 .code {
-  font: 1em/1.375 "Consolas", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace;
+  font: 1em/1.375 monospace;
+  background-color: rgba(0,0,0,0.08);
 }
 li ul,
 li ol {
@@ -302,6 +303,10 @@ tfoot {
 input,
 textarea {
   font: inherit;
+}
+textarea {
+  width: 35em;
+  height: 16em;
 }
 input[readonly] {
   color: #666;
@@ -395,6 +400,7 @@ label {
   list-style-type: none;
   padding: 2px 8px;
   margin: 0;
+  margin-bottom: 0px;
 }
 #navbar ul.menu li {
   padding: 0;
@@ -404,15 +410,14 @@ label {
 #navbar ul.menu li a {
   padding: 6px 8px;
   text-decoration: none;
-  border: 2px solid transparent;
 }
 #navbar ul.menu li a:hover {
-  background: #ddd;
-  border: 2px solid #999;
+  background: #729cb6;
+  color: white;
 }
 #navbar ul.menu li a.selected {
-  background: #ccc;
-  border: 2px solid #999;
+  background: #426880;
+  color: white;
 }
 #inner-wrap-flash {
   width: 960px;
@@ -546,10 +551,11 @@ label {
   height: 100%;
 }
 #outer-wrap-footer {
-  background-color: #eee;
+  background-color: #426880;
   border-top: 1px solid #bbb;
 }
 #inner-wrap-footer {
+  color: black;
   width: 960px;
   margin: 0 auto;
   *zoom: 1;
@@ -564,6 +570,13 @@ label {
 #inner-wrap-footer:after {
   clear: both;
 }
+#inner-wrap-footer a {
+  color: #bbb;
+}
+#inner-wrap-footer a:hover,
+#inner-wrap-footer a:focus {
+  color: #ddd;
+}
 #footer {
   display: inline;
   float: left;
@@ -571,7 +584,6 @@ label {
   margin: 0 10px;
   height: inherit;
   font-size: 1em;
-  color: #666;
   margin: 0 10px;
 }
 div.info,

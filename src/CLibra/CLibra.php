@@ -16,6 +16,8 @@ class CLibra implements ISingleton {
     public $session;
     public $timer = array();
     public $user;
+    public $adminUser;
+    public $adminGroup;
 	
 	/**
 	 * Constructor
@@ -47,6 +49,12 @@ class CLibra implements ISingleton {
         
         // Create an object for the user
         $this->user = new CMUser($this);
+        
+        // Create an object for admininstration of users
+        $this->adminUser = new CMAdminUser($this);
+        
+        // Create an object for administration of groups
+        $this->adminGroup = new CMAdminGroup($this);
 	}
 	
 	/**

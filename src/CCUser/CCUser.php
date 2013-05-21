@@ -122,7 +122,7 @@ class CCuser extends CObject implements IController {
      * 
      * @param CForm $form The form that was sublmitted
      */
-    public function DoCreate($form) {
+    public function DoCreateUser($form) {
         if ($form['password']['value'] != $form['password1']['value'] || empty($form['password']['value']) || empty($form['password1']['value'])) {
             $this->AddMessage('error', 'Password does not match or is empty.');
             $this->RedirectToController('create');
@@ -147,6 +147,4 @@ class CCuser extends CObject implements IController {
         $this->user->Init();
         $this->RedirectToController();
     }
-    
-        
 }

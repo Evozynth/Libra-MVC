@@ -10,6 +10,11 @@ require(LIBRA_INSTALL_PATH.'/src/bootstrap.php');
 
 $li = CLibra::Instance();
 
+// Disable Admin Control Panel if not logged in as admin
+if (!$li->user['hasRoleAdmin']) {
+    $li->config['controllers']['acp']['enabled'] = false;
+}
+
 //
 // PHASE: FRONTCONTROLLER ROUTE
 //

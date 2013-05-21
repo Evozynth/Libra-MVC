@@ -79,7 +79,7 @@ class CMContent extends CObject implements IHasSQL, ArrayAccess, IModule {
                     $this->db->ExecuteQuery(self::SQL('create table content'));
                     $this->db->ExecuteQuery(self::SQL('insert content'), array('hello-world', 'post', 'Hello World', "This is a demo post.\n\nThis is another row in this demo post.", 'plain', $this->user['id']));
                     $this->db->ExecuteQuery(self::SQL('insert content'), array('hello-world-again', 'post', 'Hello World Again', "This is another demo post.\n\nThis is another row in this demo post.", 'plain', $this->user['id']));
-                    $this->db->ExecuteQuery(self::SQL('insert content'), array('hello-world-once-more', 'post', 'Hello World Once More', "This is onte more demo post.\n\nThis is another row in this demo post.", 'plain', $this->user['id']));
+                    $this->db->ExecuteQuery(self::SQL('insert content'), array('hello-world-once-more', 'post', 'Hello World Once More', "This is one more demo post.\n\nThis is another row in this demo post.", 'plain', $this->user['id']));
                     $this->db->ExecuteQuery(self::SQL('insert content'), array('home', 'page', 'Home Page', "This is a demo page, this could be your personal home-page.", 'plain', $this->user['id']));
                     $this->db->ExecuteQuery(self::SQL('insert content'), array('about', 'page', 'About Page', "This is a demo page, this could be your personal about-page.", 'plain', $this->user['id']));
                     $this->db->ExecuteQuery(self::SQL('insert content'), array('download', 'page', 'Download Page', "This is a demo page, this could be your personal download-page.", 'plain', $this->user['id']));
@@ -90,7 +90,8 @@ class CMContent extends CObject implements IHasSQL, ArrayAccess, IModule {
                     $this->db->ExecuteQuery(self::SQL('insert content'), array('Combined filters', 'page', 'Page with Combined filters', "This is a demo page with some html code intended to run through smartypants, bbcode, htmlpurify and clickable. Edit the source and insert html code to see if it works.\n\nStraight qoutes is converted to curly -- \"Text in double qoutes\" and 'Text in single qoutes'. Three consecutive dots (...) into an ellipsis entity.\n\nLinks should atutomatically be created -- http://php.net/.\n\n It should work also with bbcode mixed in: [b]this should be bould text[/b]. \n\n", 'smartypants, clickable, htmlpurify, bbcode', $this->user['id']));
                     return array('success', 'Successfully created the database tables and created a deafult "Hello World" blog post, owned by you.');
                 } catch(Exception $e) {
-                    die("$e<br>Failed to open database: " . $this->config['database'][0]['dsn']);
+                    return array('error', 'Could not create table. Make sure site/data is writeable');
+                    //die("$e<br>Failed to open database: " . $this->config['database'][0]['dsn']);
                 }
                 break;
             

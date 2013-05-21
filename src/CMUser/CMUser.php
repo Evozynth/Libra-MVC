@@ -65,7 +65,8 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess, IModule {
                     $this->db->ExecuteQuery(self::SQL('insert into user2group'), array($idDoeUser, $idUserGroup));
                     return array('success', 'Successfully created the database tables and created a default admin user as root:root and an ordinary user doe:doe.');
                 } catch(Exception $e) {
-                    die("$e<br>Failed to open database: " . $this->config['database'][0]['dsn']);
+                    return array('error', 'Could not create table. Make sure site/data is writeable');
+                    //die("$e<br>Failed to open database: " . $this->config['database'][0]['dsn']);
                 }
                 break;
             
@@ -76,7 +77,7 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess, IModule {
     }
     
     /**
-     * Implementing interface IHasSQL. Encapsulating all SQL used bu this class.
+     * Implementing interface IHasSQL. Encapsulating all SQL used by this class.
      * 
      * @param string $key The string that is the key of the wanted SQL-entry in the array.
      */

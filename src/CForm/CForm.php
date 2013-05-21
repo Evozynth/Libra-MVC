@@ -203,6 +203,21 @@ class CFormElementSubmit extends CFormElement {
 
 }
 
+class CFormElementCheckbox extends CFormElement {
+    
+    /**
+     * Constructor
+     * 
+     * @param string $name The name of the element.
+     * @param array Attributes to set to the element. Default is an empty array.
+     */
+    public function __construct($name, $attributes = array()) {
+        parent::__construct($name, $attributes);
+        $this['type'] = 'checkbox';
+        $this->UseNameAsDefaultLabel();
+    }
+}
+
 class CForm implements ArrayAccess {
 
     /**

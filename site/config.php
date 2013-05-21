@@ -85,6 +85,7 @@ $li->config['controllers'] = array(
     'blog'         => array('enabled' => true, 'class' => 'CCBlog'),
     'page'         => array('enabled' => true, 'class' => 'CCPage'),
     'modules'      => array('enabled' => true, 'class' => 'CCModules'),
+    'install'      => array('enabled' => true, 'class' => 'CCInstall'),
     'my'           => array('enabled' => true, 'class' => 'CCMycontroller')
 );
 
@@ -103,7 +104,6 @@ $li->config['menus'] = array(
     ),
     'my-navbar' => array(
         'home'      => array('label' => 'About Me', 'url' => 'my'),
-        'blog'      => array('label' => 'My Blog', 'url' => 'my/blog'),
         'guestbook' => array('label' => 'Guestbook', 'url' => 'my/guestbook'),
     ),
 );
@@ -134,6 +134,7 @@ $li->config['menus'] = array(
  * available to the template files.
  */
 $li->config['theme'] = array(
+    'name'          => 'grid',
     'path'          => 'site/themes/mytheme',
     //'path'          => 'themes/grid',
     'parent'        => 'themes/grid',

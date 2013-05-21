@@ -28,6 +28,21 @@ class CSession {
     public function GetAuthenticatedUser() { return isset($this->data['authenticated_user']) ? $this->data['authenticated_user'] : null; }
     
     /**
+     * 
+     * Get, Set or Unset the currently edited user.
+     */
+    public function SetEditUser($editUser) { $this->data['editUser'] = $editUser; }
+    public function UnsetEditUser() { unset($this->data['editUser']); }
+    public function GetEditUser() { return isset($this->data['editUser']) ? $this->data['editUser'] : null; }
+    
+    /**
+     * Get, Set ot Unset the currently edited Group
+     */
+    public function SetEditGroup($editGroup) { $this->data['editGroup'] = $editGroup; }
+    public function UnsetEditGroup() { unset($this->data['editGroup']); }
+    public function GetEditGroup() { return isset($this->data['editGroup']) ? $this->data['editGroup'] : null; }
+    
+    /**
      * Store values into session.
      */    
     public function StoreInSession() {

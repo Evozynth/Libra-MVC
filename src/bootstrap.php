@@ -73,3 +73,20 @@ function bbcode2html($text) {
     );
     return preg_replace($search, $replace, $text);
 }
+
+/**
+ * Used in install process of .htaccess file to check session state.
+ * 
+ * @return array That holds information on style class and message
+ */
+function check_htaccess() {
+    if (isset($_SESSION['htaccess']) && $_SESSION['htaccess'][0] == true) {
+            $result = array('htaccess' => array('message' => 'Successfully created .htaccess in ' . $_SESSION['htaccess'][1] . '.', 'class' => 'success'));
+        } elseif (isset($_SESSION['htaccess']) && $_SESSION['htaccess'][0] == false) {
+            $result = array('htaccess' => array('message' => 'Failed to create .htaccess, is ' . $_SESSION['htaccess'][1] . ' write protected?', 'class' => 'error'));
+        } else {
+            $result = array();
+        }
+        unset($_SESSION['htaccess']);
+        return $result;
+}

@@ -1,10 +1,16 @@
 /**
  * Description: Sample theme for site which extends the Libra grid-theme.
  */
-@import url(../../../themes/grid/style.css);
+@import url(../../../themes/grid/style.css); /* Don not remove this line */
 
+/* Uncomment the lines below to see an example of how to alter the styling of the theme. */
+
+/*
 html { background-color: #ffe2b3; }
 body { background-color: #d0dce1; }
 #outer-wrap-header { background-color: #ffe2b3; border-bottom: 2px solid #ffce80; }
 #outer-wrap-footer { background-color: #ffe2b3; }
 a { color: #436370; }
+#footer a { color: #3C578C; }
+#footer a:hover, #footer a:active { color: #729cb6; }
+*/

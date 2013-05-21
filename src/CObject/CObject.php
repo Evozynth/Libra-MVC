@@ -16,6 +16,8 @@ class CObject {
     protected $views;
     protected $session;
     protected $user;
+    protected $adminUser;
+    protected $adminGroup;
     
     /**
      * Constructor, can be instanciated by sending in the $li reference.
@@ -24,14 +26,16 @@ class CObject {
         if (!$li) {
             $li = CLibra::Instance();
         }
-        $this->li       = &$li;
-        $this->config   = &$li->config;
-        $this->request  = &$li->request;
-        $this->data     = &$li->data;
-        $this->db       = &$li->db;
-        $this->views    = &$li->views;
-        $this->session  = &$li->session;
-        $this->user     = &$li->user;
+        $this->li           = &$li;
+        $this->config       = &$li->config;
+        $this->request      = &$li->request;
+        $this->data         = &$li->data;
+        $this->db           = &$li->db;
+        $this->views        = &$li->views;
+        $this->session      = &$li->session;
+        $this->user         = &$li->user;
+        $this->adminUser    = &$li->adminUser;
+        $this->adminGroup   = &$li->adminGroup;
     }
     
     /**
