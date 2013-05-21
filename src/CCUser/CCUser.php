@@ -143,8 +143,8 @@ class CCuser extends CObject implements IController {
     /**
      * Init the user database.
      */
-    public function Init() {
-        $this->user->Init();
-        $this->RedirectToController();
-    }
+//    public function Init() {
+//        $this->user->Init();
+//        $this->RedirectToController();
+//    }
 }

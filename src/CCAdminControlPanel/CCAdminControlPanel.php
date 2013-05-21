@@ -38,7 +38,7 @@ class CCAdminControlPanel extends CObject implements IController {
             $this->RedirectToController('createuser');
         }
         $this->views->SetTitle('Create user')
-                    ->AddInclude(__DIR__ . '/createuser.tpl.php', array('form' => $form->GetHTML()));
+                    ->AddInclude(__DIR__ . '/createUser.tpl.php', array('form' => $form->GetHTML()));
     }
     
     /**
@@ -158,7 +158,7 @@ class CCAdminControlPanel extends CObject implements IController {
         $this->adminGroup['name'] = $form['name']['value'];
         $ret = $this->adminGroup->SaveGroup();
         $this->AddMessage($ret, 'Saved group.', 'Failed saving group.');
-        $this->RedirectToController('editgroup/'.$this->adminGroup['id']);
+        $this->RedirectToController('editGroup/'.$this->adminGroup['id']);
     }
     
     /**
@@ -207,7 +207,7 @@ class CCAdminControlPanel extends CObject implements IController {
             $this->RedirectToController('creategroup');
         }
         $this->views->SetTitle('Create Group')
-                    ->AddInclude(__DIR__ . '/creategroup.tpl.php', array('form' => $form->GetHTML()));
+                    ->AddInclude(__DIR__ . '/createGroup.tpl.php', array('form' => $form->GetHTML()));
     }
     
     /**
