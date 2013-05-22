@@ -64,7 +64,7 @@ all starting with `$li->config['debug']`.
 They are either set to true or false. True meaning that Libra will print out information about that particular area.
 Simply set all these values to `false` to turn them of.
  
-To remove the links, open the file `themes/grid/index.tpl.php` and delete (or comment out) the line that says `<?=get_tools()?>`.
+To remove the links, open the file `themes/grid/index.tpl.php` and delete the line that says `<?=get_tools()?>`.
 
 ###Change the logo###
 
@@ -138,12 +138,10 @@ We are going to add a new entry to *'my-navbar'*. Paste the following code on a 
     'mynewpage' => array('label' => 'MyNewPage', 'url' => 'my/mynewpage'),
 
 * The first parameter *'mynewpage'* should be unique, otherwise it overwrites previous entries with the same name.  
-* *'label'* sets the text shown on the menu item.  
+* *'label'* sets the text shown on the menu item.
 * *'url'* defines what the menu item links to in the form of *controller/method*. Since we created the method
 *MyNewPage* in the controller class *CCMycontroller* the url becomes *'my/mynewpage'*.
-
-
-    NOTE: $li->config['controllers'] is a routing table where 'my' points to 'CCMycontroller'
+        NOTE: $li->config['controllers'] is a routing table where 'my' points to 'CCMycontroller'
 
 
 How to create a blog
